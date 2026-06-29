@@ -1,0 +1,310 @@
+# Platform Consolidation Architecture Index
+# Machine-readable index of all architecture documents
+# Generated: 2026-06-29
+# Phase: 2.1D.0
+# IMPORTANT: Keep in sync with 00-README.md and README.md
+
+schema_version: "1.0"
+domain: "platform-consolidation"
+phase: "2.1D.0"
+document_count: 37
+index_knowledge_id: "KNW-PLAT-ARCH-IDX"
+
+documents:
+  - knowledge_id: KNW-PLAT-ARCH-000
+    sequence: "00"
+    filename: "00-README.md"
+    title: "Architecture Navigation Guide"
+    status: AUTHORITATIVE
+    tier: 0
+    purpose: "Navigation and conventions"
+
+  - knowledge_id: KNW-PLAT-ARCH-001
+    sequence: "01"
+    filename: "01-VISION.md"
+    title: "Platform Consolidation Vision"
+    status: AUTHORITATIVE
+    tier: 1
+    purpose: "Problem, end state, success criteria"
+
+  - knowledge_id: KNW-PLAT-ARCH-002
+    sequence: "02"
+    filename: "02-OBJECT-MODEL.md"
+    title: "Platform Object Model"
+    status: AUTHORITATIVE
+    tier: 1
+    purpose: "16 canonical platform objects and schemas"
+
+  - knowledge_id: KNW-PLAT-ARCH-003
+    sequence: "03"
+    filename: "03-DIRECTORY-ARCHITECTURE.md"
+    title: "Platform Directory Architecture"
+    status: AUTHORITATIVE
+    tier: 1
+    purpose: "Target directory layout and naming rules"
+
+  - knowledge_id: KNW-PLAT-ARCH-004
+    sequence: "04"
+    filename: "04-PACKAGE-MODEL.md"
+    title: "Platform Package Model"
+    status: AUTHORITATIVE
+    tier: 1
+    purpose: "pyproject.toml, namespaces, dependency groups"
+
+  - knowledge_id: KNW-PLAT-ARCH-005
+    sequence: "05"
+    filename: "05-MODULE-CATALOG.md"
+    title: "Platform Module Catalog"
+    status: AUTHORITATIVE
+    tier: 2
+    purpose: "All 78 modules with status and capabilities"
+
+  - knowledge_id: KNW-PLAT-ARCH-006
+    sequence: "06"
+    filename: "06-RUNTIME-MODEL.md"
+    title: "Platform Runtime Model"
+    status: AUTHORITATIVE
+    tier: 2
+    purpose: "7 runtimes, boot order, Protocol, health"
+
+  - knowledge_id: KNW-PLAT-ARCH-007
+    sequence: "07"
+    filename: "07-KERNEL-MODEL.md"
+    title: "Platform Kernel Model"
+    status: AUTHORITATIVE
+    tier: 2
+    purpose: "5 kernel subsystems, zero external dependencies"
+
+  - knowledge_id: KNW-PLAT-ARCH-008
+    sequence: "08"
+    filename: "08-SDK-MODEL.md"
+    title: "Platform SDK Model"
+    status: AUTHORITATIVE
+    tier: 2
+    purpose: "8 SDK modules, public API, stability policy"
+
+  - knowledge_id: KNW-PLAT-ARCH-009
+    sequence: "09"
+    filename: "09-SERVICE-MODEL.md"
+    title: "Platform Service Model"
+    status: AUTHORITATIVE
+    tier: 2
+    purpose: "6 services, ABC interfaces, DI registration"
+
+  - knowledge_id: KNW-PLAT-ARCH-010
+    sequence: "10"
+    filename: "10-DEPENDENCY-RULES.md"
+    title: "Platform Dependency Rules"
+    status: AUTHORITATIVE
+    tier: 3
+    purpose: "DR-001 through DR-010, dependency matrix"
+
+  - knowledge_id: KNW-PLAT-ARCH-011
+    sequence: "11"
+    filename: "11-LAYER-RULES.md"
+    title: "Platform Layer Rules"
+    status: AUTHORITATIVE
+    tier: 3
+    purpose: "7 layers, LR-001 through LR-011, enforcement"
+
+  - knowledge_id: KNW-PLAT-ARCH-012
+    sequence: "12"
+    filename: "12-IMPORT-RULES.md"
+    title: "Platform Import Rules"
+    status: AUTHORITATIVE
+    tier: 3
+    purpose: "IR-001 through IR-008, old path rewrite map"
+
+  - knowledge_id: KNW-PLAT-ARCH-013
+    sequence: "13"
+    filename: "13-METADATA-STANDARD.md"
+    title: "Platform Metadata Standard"
+    status: AUTHORITATIVE
+    tier: 3
+    purpose: "6 YAML schemas: module, runtime, service, capability, manifest, ownership"
+
+  - knowledge_id: KNW-PLAT-ARCH-014
+    sequence: "14"
+    filename: "14-PLATFORM-MANIFEST.md"
+    title: "Platform Manifest"
+    status: AUTHORITATIVE
+    tier: 3
+    purpose: "Manifest structure, checksum algorithm, lifecycle"
+
+  - knowledge_id: KNW-PLAT-ARCH-015
+    sequence: "15"
+    filename: "15-CAPABILITY-REGISTRY.md"
+    title: "Platform Capability Registry"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "All 66 capability IDs with domains and stability"
+
+  - knowledge_id: KNW-PLAT-ARCH-016
+    sequence: "16"
+    filename: "16-SERVICE-REGISTRY.md"
+    title: "Platform Service Registry"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "All 6 services with interfaces and DI registration"
+
+  - knowledge_id: KNW-PLAT-ARCH-017
+    sequence: "17"
+    filename: "17-MODULE-REGISTRY.md"
+    title: "Platform Module Registry"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "All 58 primary modules with IDs and capabilities"
+
+  - knowledge_id: KNW-PLAT-ARCH-018
+    sequence: "18"
+    filename: "18-EVENT-MODEL.md"
+    title: "Platform Event Model"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "All platform events, schemas, routing rules"
+
+  - knowledge_id: KNW-PLAT-ARCH-019
+    sequence: "19"
+    filename: "19-STATE-MACHINES.md"
+    title: "Platform State Machines"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "5 state machines: runtime, migration, provider, execution, knowledge"
+
+  - knowledge_id: KNW-PLAT-ARCH-020
+    sequence: "20"
+    filename: "20-DATA-STRUCTURES.md"
+    title: "Platform Data Structures"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "All canonical types: enums, dataclasses, Pydantic models"
+
+  - knowledge_id: KNW-PLAT-ARCH-021
+    sequence: "21"
+    filename: "21-ALGORITHMS.md"
+    title: "Platform Algorithms"
+    status: AUTHORITATIVE
+    tier: 4
+    purpose: "10 algorithms: workload detection, EMA, routing, scoring"
+
+  - knowledge_id: KNW-PLAT-ARCH-022
+    sequence: "22"
+    filename: "22-MIGRATION-ENGINE.md"
+    title: "Platform Migration Engine"
+    status: AUTHORITATIVE
+    tier: 5
+    purpose: "4-phase migration design with step-by-step specifications"
+
+  - knowledge_id: KNW-PLAT-ARCH-023
+    sequence: "23"
+    filename: "23-IMPORT-REWRITE.md"
+    title: "Import Rewrite Specification"
+    status: AUTHORITATIVE
+    tier: 5
+    purpose: "3 rewrite rulesets with regex patterns and edge cases"
+
+  - knowledge_id: KNW-PLAT-ARCH-024
+    sequence: "24"
+    filename: "24-ROLLBACK-ENGINE.md"
+    title: "Platform Rollback Engine"
+    status: AUTHORITATIVE
+    tier: 5
+    purpose: "Rollback triggers, procedures, interface, and manual path"
+
+  - knowledge_id: KNW-PLAT-ARCH-025
+    sequence: "25"
+    filename: "25-VERIFICATION.md"
+    title: "Platform Verification Specification"
+    status: AUTHORITATIVE
+    tier: 5
+    purpose: "40+ machine-executable verification checks across 7 domains"
+
+  - knowledge_id: KNW-PLAT-ARCH-026
+    sequence: "26"
+    filename: "26-TEST-STRATEGY.md"
+    title: "Platform Test Strategy"
+    status: AUTHORITATIVE
+    tier: 5
+    purpose: "Test pyramid, coverage targets, 160+ test inventory"
+
+  - knowledge_id: KNW-PLAT-ARCH-027
+    sequence: "27"
+    filename: "27-PERFORMANCE-BUDGET.md"
+    title: "Platform Performance Budget"
+    status: AUTHORITATIVE
+    tier: 5
+    purpose: "P50/P99 budgets for all operations, memory and throughput limits"
+
+  - knowledge_id: KNW-PLAT-ARCH-028
+    sequence: "28"
+    filename: "28-DASHBOARD.md"
+    title: "Platform Dashboard Architecture"
+    status: AUTHORITATIVE
+    tier: 6
+    purpose: "Desktop-only dashboard: 6 panels, data sources, refresh rates"
+
+  - knowledge_id: KNW-PLAT-ARCH-029
+    sequence: "29"
+    filename: "29-CLI.md"
+    title: "Platform CLI Architecture"
+    status: AUTHORITATIVE
+    tier: 6
+    purpose: "All CLI commands: platform-verify, platform-migrate, platform-generate"
+
+  - knowledge_id: KNW-PLAT-ARCH-030
+    sequence: "30"
+    filename: "30-API.md"
+    title: "Platform API Architecture"
+    status: AUTHORITATIVE
+    tier: 6
+    purpose: "All HTTP endpoints with request/response schemas"
+
+  - knowledge_id: KNW-PLAT-ARCH-031
+    sequence: "31"
+    filename: "31-KNOWLEDGE-INTEGRATION.md"
+    title: "Platform Knowledge Integration"
+    status: AUTHORITATIVE
+    tier: 6
+    purpose: "Knowledge ID format, graph linking, search queries"
+
+  - knowledge_id: KNW-PLAT-ARCH-032
+    sequence: "32"
+    filename: "32-RUNTIME-INTEGRATION.md"
+    title: "Platform Runtime Integration"
+    status: AUTHORITATIVE
+    tier: 6
+    purpose: "Boot sequence timing, capability registration, shutdown order"
+
+  - knowledge_id: KNW-PLAT-ARCH-033
+    sequence: "33"
+    filename: "33-PLATFORM-GOVERNANCE.md"
+    title: "Platform Governance"
+    status: AUTHORITATIVE
+    tier: 7
+    purpose: "Ownership, change types, approval requirements, exception process"
+
+  - knowledge_id: KNW-PLAT-ARCH-034
+    sequence: "34"
+    filename: "34-ARCHITECTURE-DECISIONS.md"
+    title: "Architecture Decision Records"
+    status: AUTHORITATIVE
+    tier: 7
+    purpose: "10 ADRs with context, decision, and consequences"
+
+  - knowledge_id: KNW-PLAT-ARCH-035
+    sequence: "35"
+    filename: "35-ARCHITECTURE-FREEZE.md"
+    title: "Architecture Freeze"
+    status: AUTHORITATIVE
+    tier: 7
+    purpose: "Freeze declaration and Phase 2.1D.1 gate conditions"
+
+# Tier definitions:
+# 0 = Navigation
+# 1 = Foundation (vision, objects, directory, packages)
+# 2 = Architecture (runtimes, kernel, SDK, services)
+# 3 = Rules (dependency, layer, import, metadata, manifest)
+# 4 = Registries & Models (capabilities, services, modules, events, state machines, data, algorithms)
+# 5 = Migration (migration engine, import rewrite, rollback, verification, tests, performance)
+# 6 = Interfaces (dashboard, CLI, API, knowledge, runtime integration)
+# 7 = Governance (governance, decisions, freeze)
