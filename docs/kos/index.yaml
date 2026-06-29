@@ -1,0 +1,160 @@
+# KOS Architecture Index
+# Machine-readable index of all Phase 3.0A KOS architecture documents
+# Generated: 2026-06-30
+# Phase: 3.0A — Knowledge Operating System Vision & Master Architecture
+
+schema_version: "1.0"
+domain: "kos"
+phase: "3.0A"
+document_count: 20
+index_knowledge_id: "KNW-KOS-ARCH-IDX"
+
+documents:
+  - knowledge_id: KNW-KOS-ARCH-000
+    sequence: "00"
+    filename: "00-README.md"
+    title: "KOS Architecture Navigation Guide"
+    status: AUTHORITATIVE
+    tier: 0
+
+  - knowledge_id: KNW-KOS-ARCH-001
+    sequence: "01"
+    filename: "01-VISION.md"
+    title: "KOS Vision & Mission"
+    status: AUTHORITATIVE
+    tier: 1
+
+  - knowledge_id: KNW-KOS-ARCH-002
+    sequence: "02"
+    filename: "02-CORE-PHILOSOPHY.md"
+    title: "KOS Core Philosophy — Knowledge as Origin"
+    status: AUTHORITATIVE
+    tier: 1
+
+  - knowledge_id: KNW-KOS-ARCH-003
+    sequence: "03"
+    filename: "03-GOLDEN-RULES.md"
+    title: "KOS Golden Rules (GR-001 through GR-010)"
+    status: AUTHORITATIVE
+    tier: 1
+
+  - knowledge_id: KNW-KOS-ARCH-004
+    sequence: "04"
+    filename: "04-OBJECT-MODEL.md"
+    title: "KOS Knowledge Object Model"
+    status: AUTHORITATIVE
+    tier: 2
+
+  - knowledge_id: KNW-KOS-ARCH-005
+    sequence: "05"
+    filename: "05-KNOWLEDGE-GRAPH.md"
+    title: "KOS Knowledge Graph"
+    status: AUTHORITATIVE
+    tier: 2
+
+  - knowledge_id: KNW-KOS-ARCH-006
+    sequence: "06"
+    filename: "06-KNOWLEDGE-COMPILER.md"
+    title: "KOS Knowledge Compiler"
+    status: AUTHORITATIVE
+    tier: 2
+
+  - knowledge_id: KNW-KOS-ARCH-007
+    sequence: "07"
+    filename: "07-KNOWLEDGE-REGISTRY.md"
+    title: "KOS Knowledge Registry"
+    status: AUTHORITATIVE
+    tier: 2
+
+  - knowledge_id: KNW-KOS-ARCH-008
+    sequence: "08"
+    filename: "08-QUERY-ENGINE.md"
+    title: "KOS Knowledge Query Engine"
+    status: AUTHORITATIVE
+    tier: 3
+
+  - knowledge_id: KNW-KOS-ARCH-009
+    sequence: "09"
+    filename: "09-REASONING-ENGINE.md"
+    title: "KOS Knowledge Reasoning Engine"
+    status: AUTHORITATIVE
+    tier: 3
+
+  - knowledge_id: KNW-KOS-ARCH-010
+    sequence: "10"
+    filename: "10-EXECUTION-ENGINE.md"
+    title: "KOS Knowledge Execution Engine"
+    status: AUTHORITATIVE
+    tier: 3
+
+  - knowledge_id: KNW-KOS-ARCH-011
+    sequence: "11"
+    filename: "11-GOVERNANCE.md"
+    title: "KOS Knowledge Governance"
+    status: AUTHORITATIVE
+    tier: 4
+
+  - knowledge_id: KNW-KOS-ARCH-012
+    sequence: "12"
+    filename: "12-QUALITY.md"
+    title: "KOS Knowledge Quality"
+    status: AUTHORITATIVE
+    tier: 4
+
+  - knowledge_id: KNW-KOS-ARCH-013
+    sequence: "13"
+    filename: "13-LIFECYCLE.md"
+    title: "KOS Knowledge Lifecycle"
+    status: AUTHORITATIVE
+    tier: 4
+
+  - knowledge_id: KNW-KOS-ARCH-014
+    sequence: "14"
+    filename: "14-KOS-PLATFORM.md"
+    title: "KOS as Platform Owner"
+    status: AUTHORITATIVE
+    tier: 5
+
+  - knowledge_id: KNW-KOS-ARCH-015
+    sequence: "15"
+    filename: "15-FUTURE-SYSTEMS.md"
+    title: "KOS Future Systems Dependency"
+    status: AUTHORITATIVE
+    tier: 5
+
+  - knowledge_id: KNW-KOS-ARCH-016
+    sequence: "16"
+    filename: "16-IMPLEMENTATION-ROADMAP.md"
+    title: "KOS Implementation Roadmap (3.0A–Products)"
+    status: AUTHORITATIVE
+    tier: 5
+
+  - knowledge_id: KNW-KOS-ARCH-017
+    sequence: "17"
+    filename: "17-ARCHITECTURE-FREEZE.md"
+    title: "KOS Architecture Freeze"
+    status: AUTHORITATIVE
+    tier: 6
+
+  - knowledge_id: KNW-KOS-IDX
+    sequence: "—"
+    filename: "index.yaml"
+    title: "Machine-readable index"
+    status: AUTHORITATIVE
+    tier: 0
+
+  - knowledge_id: KNW-KOS-README
+    sequence: "—"
+    filename: "README.md"
+    title: "Human entry point"
+    status: AUTHORITATIVE
+    tier: 0
+
+# Tier definitions:
+# 0 = Navigation & index
+# 1 = Foundation (vision, philosophy, rules)
+# 2 = Architecture (objects, graph, compiler, registry)
+# 3 = Engines (query, reasoning, execution)
+# 4 = Governance (governance, quality, lifecycle)
+# 5 = Platform & systems (platform ownership, future systems, roadmap)
+# 6 = Closure (freeze)
