@@ -1,0 +1,173 @@
+phase: "3.0D.0.5"
+name: "Knowledge Operating System v1.0 Final Documentation"
+status: FROZEN
+frozen_at: "2026-06-30"
+owner: architecture-board
+version: "KOS v1.0.0"
+depends_on:
+  - "phase-3.0C"
+  - "phase-3.0C.5"
+  - "phase-3.0D.0"
+document_count: 23
+
+documents:
+  - id: "KNW-FINAL-000"
+    file: "00-README.md"
+    title: "KOS v1.0 Final Documentation — Navigation Index"
+    tier: 0
+    status: CANONICAL
+
+  - id: "KNW-FINAL-001"
+    file: "01-KOS-V1-RELEASE.md"
+    title: "Knowledge Operating System v1.0 Release"
+    tier: 0
+    status: CANONICAL
+
+  - id: "KNW-FINAL-002"
+    file: "02-REFERENCE-REPOSITORY.md"
+    title: "Reference Repository"
+    tier: 1
+    status: CANONICAL
+
+  - id: "KNW-FINAL-003"
+    file: "03-GOLDEN-DATASET.md"
+    title: "Golden Dataset"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-FINAL-004"
+    file: "04-CANONICAL-OBJECTS.md"
+    title: "Canonical Object Library"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-005"
+    file: "05-CANONICAL-PACKAGES.md"
+    title: "Canonical Packages"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-006"
+    file: "06-CANONICAL-RELATIONSHIPS.md"
+    title: "Canonical Relationships"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-007"
+    file: "07-CANONICAL-WORKFLOWS.md"
+    title: "Canonical Workflows"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-008"
+    file: "08-CANONICAL-QUERY-CASES.md"
+    title: "Canonical Query Cases"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-009"
+    file: "09-CANONICAL-REASONING-CASES.md"
+    title: "Canonical Reasoning Cases"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-010"
+    file: "10-CANONICAL-SEARCH-CASES.md"
+    title: "Canonical Search Cases"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-011"
+    file: "11-CANONICAL-GRAPH-CASES.md"
+    title: "Canonical Graph Cases"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-012"
+    file: "12-CANONICAL-TRACEABILITY.md"
+    title: "Canonical Traceability"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-013"
+    file: "13-CANONICAL-EVIDENCE.md"
+    title: "Canonical Evidence"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-014"
+    file: "14-CANONICAL-METADATA.md"
+    title: "Canonical Metadata"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-015"
+    file: "15-CANONICAL-NAMESPACES.md"
+    title: "Canonical Namespaces"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-FINAL-016"
+    file: "16-KNOWLEDGE-PLAYGROUND.md"
+    title: "Knowledge Playground"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-FINAL-017"
+    file: "17-KNOWLEDGE-ACCEPTANCE-TEST.md"
+    title: "Knowledge Acceptance Test"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-FINAL-018"
+    file: "18-KNOWLEDGE-QUALITY-GATE.md"
+    title: "Knowledge Quality Gate"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-FINAL-019"
+    file: "19-KNOWLEDGE-DASHBOARD.md"
+    title: "Knowledge Dashboard"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-FINAL-020"
+    file: "20-KOS-V1-FREEZE.md"
+    title: "Knowledge Operating System v1.0 — Final Freeze"
+    tier: 6
+    status: FROZEN
+
+tiers:
+  0: "Release & Navigation"
+  1: "Repository"
+  2: "Dataset"
+  3: "Canonical Library"
+  4: "Tools"
+  5: "Gates"
+  6: "Final Freeze"
+
+kos_v1_totals:
+  phases: 4
+  total_documents: 130
+  object_types: 33
+  packages: 9
+  namespaces: 9
+  lifecycle_states: 6
+  relationship_types: 10
+  quality_dimensions: 9
+  coverage_dimensions: 8
+  lint_rules: 32
+  verification_checks: 50
+  certification_domains: 11
+  certification_levels: 5
+  acceptance_tests: 10
+  invariants: 35
+  golden_dataset_objects: 100000
+  golden_dataset_relationships: 1000000
+
+document_counts_by_phase:
+  phase_3_0C: 43
+  phase_3_0C_5: 32
+  phase_3_0D_0: 32
+  phase_3_0D_0_5: 23
+  total: 130
