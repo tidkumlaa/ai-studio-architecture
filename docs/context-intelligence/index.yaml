@@ -1,0 +1,481 @@
+---
+# UICE Architecture Index
+# Phase: 3.0D.2
+# Status: FROZEN
+# Version: 1.0.0
+# Freeze Date: 2026-06-29
+# Total Documents: 32
+
+meta:
+  phase: "3.0D.2"
+  name: "Ultra Intelligence Context Engine (UICE)"
+  version: "1.0.0"
+  status: "FROZEN"
+  freeze_date: "2026-06-29"
+  documents: 32
+  modules: 30
+  invariants: 10
+  rules: 150
+  metrics: 50
+  certification_checks: 50
+  field_matrix_entries: 120
+  model_families: 6
+  benchmark_scales: 4
+  pipeline_stages: 18
+
+invariants:
+  - id: UI-01
+    statement: "Every context token justified by IntentProfile + QueryProfile"
+  - id: UI-02
+    statement: "Delta context requires verified Conversation Memory entry"
+  - id: UI-03
+    statement: "Model Capability Adapter runs before final rendering"
+  - id: UI-04
+    statement: "Semantic Cache lookup precedes graph traversal (cache-first)"
+  - id: UI-05
+    statement: "Deduplicator runs after assembly, before planning"
+  - id: UI-06
+    statement: "Quality score >= 0.80 required before emission"
+  - id: UI-07
+    statement: "Conversation Memory session cap: 10,000 objects"
+  - id: UI-08
+    statement: "Adaptive Guard always generated for PromptPack (inherits CI-03)"
+  - id: UI-09
+    statement: "Token Budget Manager validates every pack before Model Adapter"
+  - id: UI-10
+    statement: "Learning proposals require explicit human approval before production apply"
+
+pipeline_stages:
+  - order: 1
+    name: "Intent Analyzer"
+    doc: "01-INTENT-ANALYZER"
+  - order: 2
+    name: "Query Classifier"
+    doc: "02-QUERY-CLASSIFIER"
+  - order: 3
+    name: "Conversation Memory (lookup)"
+    doc: "16-CONVERSATION-MEMORY"
+  - order: 4
+    name: "Graph Traversal"
+    doc: "08-CONTEXT-GRAPH-TRAVERSAL"
+  - order: 5
+    name: "Context Ranking Engine"
+    doc: "11-CONTEXT-RANKING-ENGINE"
+  - order: 6
+    name: "Field-Level Assembly"
+    doc: "03-FIELD-LEVEL-ASSEMBLY"
+  - order: 7
+    name: "Shared Context Optimizer"
+    doc: "05-SHARED-CONTEXT-OPTIMIZER"
+  - order: 8
+    name: "Context Delta Generator"
+    doc: "06-CONTEXT-DELTA-GENERATOR"
+  - order: 9
+    name: "Context Deduplicator"
+    doc: "07-CONTEXT-DEDUPLICATOR"
+  - order: 10
+    name: "Context Summarizer"
+    doc: "13-CONTEXT-SUMMARIZER"
+  - order: 11
+    name: "Dynamic Context Planner"
+    doc: "04-DYNAMIC-CONTEXT-PLANNER"
+  - order: 12
+    name: "Token Budget Manager"
+    doc: "10-TOKEN-BUDGET-MANAGER"
+  - order: 13
+    name: "Context Compression Engine"
+    doc: "12-CONTEXT-COMPRESSION-ENGINE"
+  - order: 14
+    name: "Model Capability Adapter"
+    doc: "22-MODEL-CAPABILITY-ADAPTER"
+  - order: 15
+    name: "Adaptive Guard Generator"
+    doc: "09-ADAPTIVE-GUARD-GENERATOR"
+  - order: 16
+    name: "Quality Optimizer"
+    doc: "25-QUALITY-OPTIMIZER"
+  - order: 17
+    name: "Context Verifier"
+    doc: "26-CONTEXT-VERIFIER"
+  - order: 18
+    name: "Pack (emit)"
+    doc: "README"
+
+documents:
+  - id: "README"
+    file: "README.md"
+    title: "UICE Overview"
+    type: "overview"
+    rules: []
+    status: "FROZEN"
+    dependencies: []
+
+  - id: "UICE-DOC-001"
+    file: "01-INTENT-ANALYZER.md"
+    title: "Intent Analyzer"
+    type: "module"
+    rules: ["UICE-001", "UICE-002", "UICE-003", "UICE-004", "UICE-005"]
+    rule_range: "UICE-001..UICE-005"
+    status: "FROZEN"
+    pipeline_stage: 1
+    outputs: ["IntentProfile"]
+    dependencies: []
+
+  - id: "UICE-DOC-002"
+    file: "02-QUERY-CLASSIFIER.md"
+    title: "Query Classifier"
+    type: "module"
+    rules: ["UICE-006", "UICE-007", "UICE-008", "UICE-009", "UICE-010"]
+    rule_range: "UICE-006..UICE-010"
+    status: "FROZEN"
+    pipeline_stage: 2
+    outputs: ["QueryProfile"]
+    dependencies: ["UICE-DOC-001"]
+
+  - id: "UICE-DOC-003"
+    file: "03-FIELD-LEVEL-ASSEMBLY.md"
+    title: "Field-Level Assembly"
+    type: "module"
+    rules: ["UICE-011", "UICE-012", "UICE-013", "UICE-014", "UICE-015"]
+    rule_range: "UICE-011..UICE-015"
+    status: "FROZEN"
+    pipeline_stage: 6
+    outputs: ["FieldLevelSlice"]
+    dependencies: ["UICE-DOC-001", "UICE-DOC-002"]
+
+  - id: "UICE-DOC-004"
+    file: "04-DYNAMIC-CONTEXT-PLANNER.md"
+    title: "Dynamic Context Planner"
+    type: "module"
+    rules: ["UICE-016", "UICE-017", "UICE-018", "UICE-019", "UICE-020"]
+    rule_range: "UICE-016..UICE-020"
+    status: "FROZEN"
+    pipeline_stage: 11
+    outputs: ["ContextPlan"]
+    dependencies: ["UICE-DOC-001", "UICE-DOC-002", "UICE-DOC-003"]
+
+  - id: "UICE-DOC-005"
+    file: "05-SHARED-CONTEXT-OPTIMIZER.md"
+    title: "Shared Context Optimizer"
+    type: "module"
+    rules: ["UICE-021", "UICE-022", "UICE-023", "UICE-024", "UICE-025"]
+    rule_range: "UICE-021..UICE-025"
+    status: "FROZEN"
+    pipeline_stage: 7
+    outputs: ["SharedPreamble", "UICEContextPack"]
+    dependencies: ["UICE-DOC-003"]
+
+  - id: "UICE-DOC-006"
+    file: "06-CONTEXT-DELTA-GENERATOR.md"
+    title: "Context Delta Generator"
+    type: "module"
+    rules: ["UICE-026", "UICE-027", "UICE-028", "UICE-029", "UICE-030"]
+    rule_range: "UICE-026..UICE-030"
+    status: "FROZEN"
+    pipeline_stage: 8
+    outputs: ["DeltaSlice"]
+    dependencies: ["UICE-DOC-016"]
+    invariants: ["UI-02"]
+
+  - id: "UICE-DOC-007"
+    file: "07-CONTEXT-DEDUPLICATOR.md"
+    title: "Context Deduplicator"
+    type: "module"
+    rules: ["UICE-031", "UICE-032", "UICE-033", "UICE-034", "UICE-035"]
+    rule_range: "UICE-031..UICE-035"
+    status: "FROZEN"
+    pipeline_stage: 9
+    outputs: ["DeduplicatedSlice"]
+    dependencies: ["UICE-DOC-005", "UICE-DOC-006"]
+    invariants: ["UI-05"]
+
+  - id: "UICE-DOC-008"
+    file: "08-CONTEXT-GRAPH-TRAVERSAL.md"
+    title: "Context Graph Traversal"
+    type: "module"
+    rules: ["UICE-036", "UICE-037", "UICE-038", "UICE-039", "UICE-040"]
+    rule_range: "UICE-036..UICE-040"
+    status: "FROZEN"
+    pipeline_stage: 4
+    outputs: ["TraversalResult"]
+    dependencies: ["UICE-DOC-001", "UICE-DOC-015"]
+
+  - id: "UICE-DOC-009"
+    file: "09-ADAPTIVE-GUARD-GENERATOR.md"
+    title: "Adaptive Guard Generator"
+    type: "module"
+    rules: ["UICE-041", "UICE-042", "UICE-043", "UICE-044", "UICE-045"]
+    rule_range: "UICE-041..UICE-045"
+    status: "FROZEN"
+    pipeline_stage: 15
+    outputs: ["AdaptiveGuardBlock"]
+    dependencies: ["UICE-DOC-001"]
+    invariants: ["UI-08"]
+
+  - id: "UICE-DOC-010"
+    file: "10-TOKEN-BUDGET-MANAGER.md"
+    title: "Token Budget Manager"
+    type: "module"
+    rules: ["UICE-046", "UICE-047", "UICE-048", "UICE-049", "UICE-050"]
+    rule_range: "UICE-046..UICE-050"
+    status: "FROZEN"
+    pipeline_stage: 12
+    outputs: ["BudgetAllocation"]
+    dependencies: ["UICE-DOC-004"]
+    invariants: ["UI-09"]
+
+  - id: "UICE-DOC-011"
+    file: "11-CONTEXT-RANKING-ENGINE.md"
+    title: "Context Ranking Engine"
+    type: "module"
+    rules: ["UICE-051", "UICE-052", "UICE-053", "UICE-054", "UICE-055"]
+    rule_range: "UICE-051..UICE-055"
+    status: "FROZEN"
+    pipeline_stage: 5
+    outputs: ["RankedObject"]
+    dependencies: ["UICE-DOC-001", "UICE-DOC-002", "UICE-DOC-019"]
+
+  - id: "UICE-DOC-012"
+    file: "12-CONTEXT-COMPRESSION-ENGINE.md"
+    title: "Context Compression Engine"
+    type: "module"
+    rules: ["UICE-056", "UICE-057", "UICE-058", "UICE-059", "UICE-060"]
+    rule_range: "UICE-056..UICE-060"
+    status: "FROZEN"
+    pipeline_stage: 13
+    outputs: ["CompressedPack"]
+    dependencies: ["UICE-DOC-003", "UICE-DOC-010", "UICE-DOC-013"]
+
+  - id: "UICE-DOC-013"
+    file: "13-CONTEXT-SUMMARIZER.md"
+    title: "Context Summarizer"
+    type: "module"
+    rules: ["UICE-061", "UICE-062", "UICE-063", "UICE-064", "UICE-065"]
+    rule_range: "UICE-061..UICE-065"
+    status: "FROZEN"
+    pipeline_stage: 10
+    outputs: ["SummarySlice"]
+    dependencies: ["UICE-DOC-001"]
+
+  - id: "UICE-DOC-014"
+    file: "14-CONTEXT-CACHE.md"
+    title: "Context Cache"
+    type: "module"
+    rules: ["UICE-066", "UICE-067", "UICE-068", "UICE-069", "UICE-070"]
+    rule_range: "UICE-066..UICE-070"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["CachedPack"]
+    dependencies: ["UICE-DOC-018"]
+
+  - id: "UICE-DOC-015"
+    file: "15-SEMANTIC-CACHE.md"
+    title: "Semantic Cache"
+    type: "module"
+    rules: ["UICE-071", "UICE-072", "UICE-073", "UICE-074", "UICE-075"]
+    rule_range: "UICE-071..UICE-075"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["SemanticCacheResult"]
+    dependencies: []
+    invariants: ["UI-04"]
+
+  - id: "UICE-DOC-016"
+    file: "16-CONVERSATION-MEMORY.md"
+    title: "Conversation Memory"
+    type: "module"
+    rules: ["UICE-076", "UICE-077", "UICE-078", "UICE-079", "UICE-080"]
+    rule_range: "UICE-076..UICE-080"
+    status: "FROZEN"
+    pipeline_stage: 3
+    outputs: ["MemoryEntry", "MemorySession"]
+    dependencies: []
+    invariants: ["UI-02", "UI-07"]
+
+  - id: "UICE-DOC-017"
+    file: "17-CONTEXT-REUSE-ENGINE.md"
+    title: "Context Reuse Engine"
+    type: "module"
+    rules: ["UICE-081", "UICE-082", "UICE-083", "UICE-084", "UICE-085"]
+    rule_range: "UICE-081..UICE-085"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["ReusableBlock"]
+    dependencies: ["UICE-DOC-014"]
+
+  - id: "UICE-DOC-018"
+    file: "18-CONTEXT-EVOLUTION.md"
+    title: "Context Evolution"
+    type: "module"
+    rules: ["UICE-086", "UICE-087", "UICE-088", "UICE-089", "UICE-090"]
+    rule_range: "UICE-086..UICE-090"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["EvolutionEvent"]
+    dependencies: ["UICE-DOC-014", "UICE-DOC-015"]
+
+  - id: "UICE-DOC-019"
+    file: "19-CONTEXT-LEARNING.md"
+    title: "Context Learning"
+    type: "module"
+    rules: ["UICE-091", "UICE-092", "UICE-093", "UICE-094", "UICE-095"]
+    rule_range: "UICE-091..UICE-095"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["FeedbackRecord", "FieldWeightAdjustment"]
+    dependencies: ["UICE-DOC-003"]
+    invariants: ["UI-10"]
+
+  - id: "UICE-DOC-020"
+    file: "20-CONTEXT-METRICS.md"
+    title: "Context Metrics"
+    type: "module"
+    rules: ["UICE-096", "UICE-097", "UICE-098", "UICE-099", "UICE-100"]
+    rule_range: "UICE-096..UICE-100"
+    metrics: 50
+    metric_range: "UICE-M-001..UICE-M-050"
+    status: "FROZEN"
+    pipeline_stage: null
+    dependencies: []
+
+  - id: "UICE-DOC-021"
+    file: "21-CONTEXT-PROFILER.md"
+    title: "Context Profiler"
+    type: "module"
+    rules: ["UICE-101", "UICE-102", "UICE-103", "UICE-104", "UICE-105"]
+    rule_range: "UICE-101..UICE-105"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["ProfileReport"]
+    dependencies: ["UICE-DOC-020"]
+
+  - id: "UICE-DOC-022"
+    file: "22-MODEL-CAPABILITY-ADAPTER.md"
+    title: "Model Capability Adapter"
+    type: "module"
+    rules: ["UICE-106", "UICE-107", "UICE-108", "UICE-109", "UICE-110"]
+    rule_range: "UICE-106..UICE-110"
+    status: "FROZEN"
+    pipeline_stage: 14
+    outputs: ["ModelProfile", "AdaptedPack"]
+    dependencies: []
+    invariants: ["UI-03"]
+    model_families: ["CLAUDE", "GPT", "GEMINI", "DEEPSEEK", "QWEN", "LOCAL"]
+
+  - id: "UICE-DOC-023"
+    file: "23-COST-OPTIMIZER.md"
+    title: "Cost Optimizer"
+    type: "module"
+    rules: ["UICE-111", "UICE-112", "UICE-113", "UICE-114", "UICE-115"]
+    rule_range: "UICE-111..UICE-115"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["CostOptimizationStrategy"]
+    dependencies: ["UICE-DOC-010", "UICE-DOC-022"]
+
+  - id: "UICE-DOC-024"
+    file: "24-LATENCY-OPTIMIZER.md"
+    title: "Latency Optimizer"
+    type: "module"
+    rules: ["UICE-116", "UICE-117", "UICE-118", "UICE-119", "UICE-120"]
+    rule_range: "UICE-116..UICE-120"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["LatencyOptimizationPlan"]
+    dependencies: []
+    latency_target_p99_ms: 60
+
+  - id: "UICE-DOC-025"
+    file: "25-QUALITY-OPTIMIZER.md"
+    title: "Quality Optimizer"
+    type: "module"
+    rules: ["UICE-121", "UICE-122", "UICE-123", "UICE-124", "UICE-125"]
+    rule_range: "UICE-121..UICE-125"
+    status: "FROZEN"
+    pipeline_stage: 16
+    outputs: ["QualityReport"]
+    dependencies: ["UICE-DOC-009", "UICE-DOC-012"]
+    invariants: ["UI-06"]
+    quality_floor: 0.80
+
+  - id: "UICE-DOC-026"
+    file: "26-CONTEXT-VERIFIER.md"
+    title: "Context Verifier"
+    type: "module"
+    rules: ["UICE-126", "UICE-127", "UICE-128", "UICE-129", "UICE-130"]
+    rule_range: "UICE-126..UICE-130"
+    status: "FROZEN"
+    pipeline_stage: 17
+    outputs: ["VerificationResult"]
+    dependencies: ["UICE-DOC-025"]
+    verification_checks: 20
+    cae_invariants_checked: 10
+    uice_invariants_checked: 10
+
+  - id: "UICE-DOC-027"
+    file: "27-CONTEXT-BENCHMARK.md"
+    title: "Context Benchmark"
+    type: "module"
+    rules: ["UICE-131", "UICE-132", "UICE-133", "UICE-134", "UICE-135"]
+    rule_range: "UICE-131..UICE-135"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["BenchmarkReport"]
+    dependencies: ["UICE-DOC-020"]
+    benchmark_scales: ["SMOKE", "STANDARD", "LARGE", "FULL"]
+    benchmark_metrics: 8
+
+  - id: "UICE-DOC-028"
+    file: "28-CONTEXT-CERTIFICATION.md"
+    title: "Context Certification"
+    type: "module"
+    rules: ["UICE-136", "UICE-137", "UICE-138", "UICE-139", "UICE-140"]
+    rule_range: "UICE-136..UICE-140"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["CertificationResult"]
+    dependencies: ["UICE-DOC-027"]
+    certification_levels: ["UICE-PROTO", "UICE-STANDARD", "UICE-ADVANCED", "UICE-RESEARCH"]
+    certification_checks: 50
+    check_range: "UICE-CC-01..UICE-CC-50"
+
+  - id: "UICE-DOC-029"
+    file: "29-DASHBOARD.md"
+    title: "Dashboard"
+    type: "module"
+    rules: ["UICE-141", "UICE-142", "UICE-143", "UICE-144", "UICE-145"]
+    rule_range: "UICE-141..UICE-145"
+    status: "FROZEN"
+    pipeline_stage: null
+    outputs: ["DashboardReport"]
+    dependencies: ["UICE-DOC-020", "UICE-DOC-027", "UICE-DOC-028"]
+    output_formats: ["MARKDOWN", "JSON", "CSV", "HTML"]
+    sections: 8
+
+  - id: "UICE-DOC-030"
+    file: "30-FREEZE.md"
+    title: "Architecture Freeze"
+    type: "freeze"
+    rules: ["UICE-146", "UICE-147", "UICE-148", "UICE-149", "UICE-150"]
+    rule_range: "UICE-146..UICE-150"
+    status: "FROZEN"
+    pipeline_stage: null
+    dependencies: ["README"]
+
+  - id: "INDEX"
+    file: "index.yaml"
+    title: "Document Index"
+    type: "index"
+    rules: []
+    status: "FROZEN"
+    dependencies: []
+
+success_targets:
+  token_reduction_pct: 99
+  compilation_p99_ms: 60
+  shared_context_savings_pct: 50
+  conversation_savings_pct: 90
+  duplicate_elimination_pct: 100
+  field_precision_pct: 99
+  hallucination_reduction_pct: 30
+  cache_hit_rate_pct: 85
