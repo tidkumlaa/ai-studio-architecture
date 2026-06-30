@@ -1,0 +1,242 @@
+phase: "3.0D.0"
+name: "Knowledge Platform Certification Suite"
+status: FROZEN
+frozen_at: "2026-06-30"
+owner: architecture-board
+depends_on:
+  - "phase-3.0C"
+  - "phase-3.0C.5"
+document_count: 32
+
+documents:
+  - id: "KNW-CERT-ARCH-000"
+    file: "00-README.md"
+    title: "Knowledge Platform Certification Suite — Navigation Index"
+    tier: 0
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-001"
+    file: "01-CERTIFICATION-OVERVIEW.md"
+    title: "Certification Overview"
+    tier: 1
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-002"
+    file: "02-SEARCH-CERTIFICATION.md"
+    title: "Search Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-003"
+    file: "03-REGISTRY-CERTIFICATION.md"
+    title: "Registry Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-004"
+    file: "04-GRAPH-CERTIFICATION.md"
+    title: "Graph Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-005"
+    file: "05-TRACEABILITY-CERTIFICATION.md"
+    title: "Traceability Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-006"
+    file: "06-METADATA-CERTIFICATION.md"
+    title: "Metadata Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-007"
+    file: "07-LIFECYCLE-CERTIFICATION.md"
+    title: "Lifecycle Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-008"
+    file: "08-RELATIONSHIP-CERTIFICATION.md"
+    title: "Relationship Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-009"
+    file: "09-DEPENDENCY-CERTIFICATION.md"
+    title: "Dependency Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-010"
+    file: "10-QUALITY-CERTIFICATION.md"
+    title: "Quality Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-011"
+    file: "11-EVIDENCE-CERTIFICATION.md"
+    title: "Evidence Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-012"
+    file: "12-QUERY-CERTIFICATION.md"
+    title: "Query Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-013"
+    file: "13-REASONING-CERTIFICATION.md"
+    title: "Reasoning Certification"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-014"
+    file: "14-PERFORMANCE-CERTIFICATION.md"
+    title: "Performance Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-015"
+    file: "15-SCALABILITY-CERTIFICATION.md"
+    title: "Scalability Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-016"
+    file: "16-STRESS-CERTIFICATION.md"
+    title: "Stress Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-017"
+    file: "17-CONCURRENCY-CERTIFICATION.md"
+    title: "Concurrency Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-018"
+    file: "18-SECURITY-CERTIFICATION.md"
+    title: "Security Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-019"
+    file: "19-RECOVERY-CERTIFICATION.md"
+    title: "Recovery Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-020"
+    file: "20-BACKUP-CERTIFICATION.md"
+    title: "Backup Certification"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-021"
+    file: "21-DATASET-CERTIFICATION.md"
+    title: "Dataset Certification"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-022"
+    file: "22-AI-CONTEXT-CERTIFICATION.md"
+    title: "AI Context Certification"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-023"
+    file: "23-HALLUCINATION-CERTIFICATION.md"
+    title: "Hallucination Certification"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-024"
+    file: "24-EVOLUTION-CERTIFICATION.md"
+    title: "Evolution Certification"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-025"
+    file: "25-REGRESSION-CERTIFICATION.md"
+    title: "Regression Certification"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-026"
+    file: "26-COVERAGE-CERTIFICATION.md"
+    title: "Coverage Certification"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-027"
+    file: "27-OVERALL-SCORING.md"
+    title: "Overall Scoring"
+    tier: 6
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-028"
+    file: "28-DASHBOARD.md"
+    title: "Certification Dashboard"
+    tier: 6
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-029"
+    file: "29-CI-INTEGRATION.md"
+    title: "CI Integration"
+    tier: 6
+    status: CANONICAL
+
+  - id: "KNW-CERT-ARCH-030"
+    file: "30-ARCHITECTURE-FREEZE.md"
+    title: "Architecture Freeze"
+    tier: 7
+    status: FROZEN
+
+tiers:
+  0: "Navigation"
+  1: "Overview"
+  2: "Functional Suites"
+  3: "Non-Functional Suites"
+  4: "Data and AI Suites"
+  5: "Evolution Suites"
+  6: "Scoring and Reporting"
+  7: "Freeze"
+
+certification_levels:
+  - Bronze:     {min_score: 0.60}
+  - Silver:     {min_score: 0.70}
+  - Gold:       {min_score: 0.80}
+  - Enterprise: {min_score: 0.90}
+  - Research:   {min_score: 0.95}
+
+domain_weights:
+  search:       0.10
+  registry:     0.10
+  graph:        0.10
+  traceability: 0.10
+  reasoning:    0.15
+  performance:  0.10
+  scalability:  0.10
+  reliability:  0.10
+  quality:      0.10
+  security:     0.05
+  evolution:    0.10
+  total:        1.00
+
+key_numbers:
+  domains: 11
+  documents: 32
+  levels: 5
+  search_query_sizes: [500, 1000, 5000, 10000]
+  reasoning_question_sizes: [500, 1000, 5000]
+  performance_dataset_sizes: [1000, 10000, 100000, 1000000]
+  traceability_chains: 500
+  regression_smoke_checks: 15
+  regression_core_checks: 75
+  ci_stages: 5
+  report_formats: 6
+  exit_codes: 8
+  hallucination_categories: 6
