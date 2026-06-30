@@ -1,0 +1,293 @@
+phase: "3.0D.0.6"
+name: "Knowledge Intelligence Layer"
+status: FROZEN
+frozen_at: "2026-06-30"
+owner: architecture-board
+version: "KIL v1.0.0"
+document_count: 33
+depends_on:
+  - "phase-3.0C"
+  - "phase-3.0C.5"
+  - "phase-3.0D.0"
+  - "phase-3.0D.0.5"
+
+documents:
+  - id: "KNW-KIL-DOC-000"
+    file: "00-README.md"
+    title: "Knowledge Intelligence Layer — Navigation"
+    tier: 0
+    status: CANONICAL
+
+  - id: "KNW-KIL-DOC-001"
+    file: "01-SELF-DESCRIBING-KNOWLEDGE.md"
+    title: "Self-Describing Knowledge"
+    tier: 0
+    status: CANONICAL
+    defines_block: "intelligence.self_describing"
+    rules: ["KIL-001", "KIL-002", "KIL-003", "KIL-004", "KIL-005", "KIL-006", "KIL-007", "KIL-008"]
+
+  - id: "KNW-KIL-DOC-002"
+    file: "02-EXECUTABLE-KNOWLEDGE.md"
+    title: "Executable Knowledge"
+    tier: 0
+    status: CANONICAL
+    defines_block: "intelligence.executable"
+    rules: ["KIL-009", "KIL-010", "KIL-011", "KIL-012", "KIL-013", "KIL-014"]
+
+  - id: "KNW-KIL-DOC-003"
+    file: "03-SEMANTIC-KNOWLEDGE.md"
+    title: "Semantic Knowledge"
+    tier: 1
+    status: CANONICAL
+    defines_block: "intelligence.semantic"
+    rules: ["KIL-015", "KIL-016", "KIL-017", "KIL-018", "KIL-019", "KIL-020", "KIL-021"]
+
+  - id: "KNW-KIL-DOC-004"
+    file: "04-AI-CONTEXT-LAYER.md"
+    title: "AI Context Layer"
+    tier: 1
+    status: CANONICAL
+    defines_block: "intelligence.ai_context"
+    rules: ["KIL-022", "KIL-023", "KIL-024", "KIL-025", "KIL-026", "KIL-027", "KIL-028"]
+
+  - id: "KNW-KIL-DOC-005"
+    file: "05-KNOWLEDGE-COMPRESSION.md"
+    title: "Knowledge Compression"
+    tier: 1
+    status: CANONICAL
+    defines_block: "intelligence.compression"
+    rules: ["KIL-029", "KIL-030", "KIL-031", "KIL-032", "KIL-033", "KIL-034", "KIL-035"]
+
+  - id: "KNW-KIL-DOC-006"
+    file: "06-REASONING-MODEL.md"
+    title: "Reasoning Model"
+    tier: 2
+    status: CANONICAL
+    defines_block: "intelligence.reasoning"
+    rules: ["KIL-036", "KIL-037", "KIL-038", "KIL-039", "KIL-040", "KIL-041"]
+
+  - id: "KNW-KIL-DOC-007"
+    file: "07-KNOWLEDGE-GENOME.md"
+    title: "Knowledge Genome"
+    tier: 2
+    status: CANONICAL
+    defines_block: "intelligence.genome"
+    rules: ["KIL-042", "KIL-043", "KIL-044", "KIL-045", "KIL-046", "KIL-047"]
+
+  - id: "KNW-KIL-DOC-008"
+    file: "08-KNOWLEDGE-DNA.md"
+    title: "Knowledge DNA"
+    tier: 2
+    status: CANONICAL
+    defines_block: "intelligence.dna"
+    rules: ["KIL-048", "KIL-049", "KIL-050", "KIL-051", "KIL-052", "KIL-053", "KIL-054"]
+    note: "DNA is IMMUTABLE once sealed at first CANONICAL promotion"
+
+  - id: "KNW-KIL-DOC-009"
+    file: "09-KNOWLEDGE-MEMORY.md"
+    title: "Knowledge Memory"
+    tier: 3
+    status: CANONICAL
+    defines_block: "intelligence.memory"
+    rules: ["KIL-055", "KIL-056", "KIL-057", "KIL-058", "KIL-059", "KIL-060"]
+    note: "Memory is written ONLY by the Knowledge Runtime — never by authors"
+
+  - id: "KNW-KIL-DOC-010"
+    file: "10-KNOWLEDGE-USAGE-MODEL.md"
+    title: "Knowledge Usage Model"
+    tier: 3
+    status: CANONICAL
+    defines_block: "intelligence.usage"
+    rules: ["KIL-061", "KIL-062", "KIL-063", "KIL-064"]
+
+  - id: "KNW-KIL-DOC-011"
+    file: "11-KNOWLEDGE-EVOLUTION.md"
+    title: "Knowledge Evolution"
+    tier: 3
+    status: CANONICAL
+    defines_block: "intelligence.evolution"
+    rules: ["KIL-065", "KIL-066", "KIL-067", "KIL-068", "KIL-069", "KIL-070"]
+
+  - id: "KNW-KIL-DOC-012"
+    file: "12-KNOWLEDGE-DIFF.md"
+    title: "Knowledge Diff"
+    tier: 4
+    status: CANONICAL
+    defines_block: "intelligence.diff"
+    rules: ["KIL-071", "KIL-072", "KIL-073", "KIL-074", "KIL-075"]
+
+  - id: "KNW-KIL-DOC-013"
+    file: "13-KNOWLEDGE-CONFIDENCE.md"
+    title: "Knowledge Confidence"
+    tier: 4
+    status: CANONICAL
+    defines_block: "intelligence.confidence"
+    rules: ["KIL-076", "KIL-077", "KIL-078", "KIL-079", "KIL-080", "KIL-081"]
+
+  - id: "KNW-KIL-DOC-014"
+    file: "14-KNOWLEDGE-QUALITY-MODEL.md"
+    title: "Knowledge Quality Model"
+    tier: 4
+    status: CANONICAL
+    defines_block: "intelligence.quality"
+    rules: ["KIL-082", "KIL-083", "KIL-084", "KIL-085", "KIL-086"]
+
+  - id: "KNW-KIL-DOC-015"
+    file: "15-KNOWLEDGE-RISK-MODEL.md"
+    title: "Knowledge Risk Model"
+    tier: 4
+    status: CANONICAL
+    defines_block: "intelligence.risk"
+    rules: ["KIL-087", "KIL-088", "KIL-089", "KIL-090", "KIL-091", "KIL-092"]
+
+  - id: "KNW-KIL-DOC-016"
+    file: "16-KNOWLEDGE-TRADEOFF-MODEL.md"
+    title: "Knowledge Tradeoff Model"
+    tier: 4
+    status: CANONICAL
+    defines_block: "intelligence.tradeoffs"
+    rules: ["KIL-093", "KIL-094", "KIL-095", "KIL-096", "KIL-097"]
+
+  - id: "KNW-KIL-DOC-017"
+    file: "17-KNOWLEDGE-DECISION-MODEL.md"
+    title: "Knowledge Decision Model"
+    tier: 5
+    status: CANONICAL
+    defines_block: "intelligence.decisions"
+    rules: ["KIL-098", "KIL-099", "KIL-100", "KIL-101", "KIL-102"]
+
+  - id: "KNW-KIL-DOC-018"
+    file: "18-KNOWLEDGE-ALTERNATIVE-MODEL.md"
+    title: "Knowledge Alternative Model"
+    tier: 5
+    status: CANONICAL
+    defines_block: "intelligence.alternatives"
+    rules: ["KIL-103", "KIL-104", "KIL-105", "KIL-106", "KIL-107"]
+
+  - id: "KNW-KIL-DOC-019"
+    file: "19-KNOWLEDGE-CORTEX.md"
+    title: "Knowledge Cortex"
+    tier: 5
+    status: CANONICAL
+    defines_block: "intelligence.cortex"
+    rules: ["KIL-108", "KIL-109", "KIL-110", "KIL-111", "KIL-112"]
+
+  - id: "KNW-KIL-DOC-020"
+    file: "20-KNOWLEDGE-THINKING-LAYER.md"
+    title: "Knowledge Thinking Layer"
+    tier: 5
+    status: CANONICAL
+    defines_block: "intelligence.thinking"
+    rules: ["KIL-113", "KIL-114", "KIL-115", "KIL-116", "KIL-117"]
+
+  - id: "KNW-KIL-DOC-021"
+    file: "21-KNOWLEDGE-EXPLANATION-LAYER.md"
+    title: "Knowledge Explanation Layer"
+    tier: 6
+    status: CANONICAL
+    defines_block: "intelligence.explanation"
+    rules: ["KIL-118", "KIL-119", "KIL-120", "KIL-121", "KIL-122"]
+
+  - id: "KNW-KIL-DOC-022"
+    file: "22-KNOWLEDGE-SUMMARIZATION.md"
+    title: "Knowledge Summarization"
+    tier: 6
+    status: CANONICAL
+    defines_rules: ["SR-001", "SR-007", "SC-01", "SC-10"]
+    rules: ["KIL-123", "KIL-124", "KIL-125", "KIL-126"]
+
+  - id: "KNW-KIL-DOC-023"
+    file: "23-KNOWLEDGE-LEARNING-LAYER.md"
+    title: "Knowledge Learning Layer"
+    tier: 6
+    status: CANONICAL
+    defines_block: "intelligence.learning"
+    rules: ["KIL-127", "KIL-128", "KIL-129", "KIL-130"]
+
+  - id: "KNW-KIL-DOC-024"
+    file: "24-KNOWLEDGE-OPTIMIZATION.md"
+    title: "Knowledge Optimization"
+    tier: 6
+    status: CANONICAL
+    defines_block: "intelligence.optimization"
+    rules: ["KIL-131", "KIL-132", "KIL-133", "KIL-134"]
+
+  - id: "KNW-KIL-DOC-025"
+    file: "25-KNOWLEDGE-INTELLIGENCE-DASHBOARD.md"
+    title: "Knowledge Intelligence Dashboard"
+    tier: 7
+    status: CANONICAL
+
+  - id: "KNW-KIL-DOC-026"
+    file: "26-KNOWLEDGE-METRICS.md"
+    title: "Knowledge Metrics"
+    tier: 7
+    status: CANONICAL
+    defines_metrics: ["KIM-001", "KIM-040"]
+
+  - id: "KNW-KIL-DOC-027"
+    file: "27-KNOWLEDGE-AI-READINESS.md"
+    title: "Knowledge AI Readiness"
+    tier: 7
+    status: CANONICAL
+    defines_metric: "AIRS (AI Readiness Score)"
+    rules: ["KIL-135", "KIL-136", "KIL-137", "KIL-138", "KIL-139"]
+
+  - id: "KNW-KIL-DOC-028"
+    file: "28-KNOWLEDGE-SEARCH-OPTIMIZATION.md"
+    title: "Knowledge Search Optimization"
+    tier: 7
+    status: CANONICAL
+    defines_block: "intelligence.search"
+    rules: ["KIL-140", "KIL-141", "KIL-142", "KIL-143", "KIL-144"]
+
+  - id: "KNW-KIL-DOC-029"
+    file: "29-KNOWLEDGE-CANONICAL-INDEX.md"
+    title: "Knowledge Canonical Index"
+    tier: 7
+    status: CANONICAL
+    rules: ["KIL-145", "KIL-146", "KIL-147", "KIL-148", "KIL-149"]
+
+  - id: "KNW-KIL-DOC-030"
+    file: "30-KNOWLEDGE-FREEZE.md"
+    title: "Knowledge Intelligence Layer — Architecture Freeze"
+    tier: 8
+    status: FROZEN
+
+tiers:
+  0: "Foundation"
+  1: "Semantic & AI Layer"
+  2: "Reasoning & Structure"
+  3: "Memory & History"
+  4: "Quality, Confidence & Risk"
+  5: "Decision & Cortex"
+  6: "Explanation & Learning"
+  7: "Metrics & Search"
+  8: "Freeze"
+
+kil_totals:
+  documents: 33
+  intelligence_sub_blocks: 20
+  kil_rules: 149
+  architecture_invariants: 10
+  kil_metrics: 40
+  airs_dimensions: 10
+  confidence_levels: 5
+  risk_categories: 5
+  search_modalities: 6
+  compression_levels: 5
+  audience_types: 5
+  learning_difficulty_levels: 5
+  genome_fields: 8
+  dna_fields: 5
+  index_types: 10
+  summarization_rules: 10
+  reasoning_relation_types: 9
+
+total_kos_architecture:
+  phase_3_0C: 43
+  phase_3_0C_5: 32
+  phase_3_0D_0: 32
+  phase_3_0D_0_5: 23
+  phase_3_0D_0_6: 33
+  total: 163
