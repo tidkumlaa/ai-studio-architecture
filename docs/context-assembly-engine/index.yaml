@@ -1,0 +1,389 @@
+phase: 3.0D.1
+name: Context Assembly Engine
+status: CANONICAL
+architecture_version: CAE-1.0.0
+frozen_at: "2026-06-30"
+owner: architecture-board
+
+description: >
+  The Context Assembly Engine (CAE) transforms a query, consumer profile, and
+  token budget into a typed context pack. It is the operational core of KOS —
+  the system that makes KOS a Knowledge Operating System rather than a
+  documentation system.
+
+pipeline:
+  stages: 9
+  p99_target_ms: 120
+  stage_sequence: [S1, S2, S3, S4, S5, S6, S7, S8, S9]
+
+totals:
+  documents: 31
+  intent_types: 12
+  query_types: 10
+  pack_types: 5
+  pipeline_stages: 9
+  design_invariants: 10
+  validation_checks: 20
+  rules: 120
+  metrics: 30
+  certification_checks: 50
+
+documents:
+  - id: CAE-DOC-000
+    file: 00-README.md
+    title: Navigation and Pipeline Overview
+    tier: 1-Foundation
+
+  - id: CAE-DOC-001
+    file: 01-CAE-OVERVIEW.md
+    title: CAE Architecture Overview
+    tier: 1-Foundation
+    defines:
+      - QueryRecord schema
+      - IntentRecord schema
+      - ContextPack schema
+      - 10 Design Invariants (CI-01 to CI-10)
+
+  - id: CAE-DOC-002
+    file: 02-CONTEXT-DESIGN-PRINCIPLES.md
+    title: Context Design Principles
+    tier: 2-Principles
+    defines:
+      - 8 context design principles
+      - rules: [CAE-001, CAE-002, CAE-003, CAE-004, CAE-005, CAE-006]
+
+  - id: CAE-DOC-003
+    file: 03-INTENT-MODEL.md
+    title: Intent Model
+    tier: 3-Input
+    defines:
+      - 12 intent types (INT-01 to INT-12)
+      - IntentRecord schema
+      - RESOLVE() algorithm
+      - rules: [CAE-007, CAE-008, CAE-009, CAE-010, CAE-011]
+
+  - id: CAE-DOC-004
+    file: 04-QUERY-TYPES.md
+    title: Query Types
+    tier: 3-Input
+    defines:
+      - 10 query types (QT-01 to QT-10)
+      - rules: [CAE-012, CAE-013, CAE-014, CAE-015]
+
+  - id: CAE-DOC-005
+    file: 05-OBJECT-SELECTOR.md
+    title: Object Selector (Stage S2)
+    tier: 4-Pipeline
+    defines:
+      - 12 selection modes
+      - SELECT() algorithm
+      - CandidateObject record
+      - rules: [CAE-016, CAE-017, CAE-018, CAE-019, CAE-020]
+
+  - id: CAE-DOC-006
+    file: 06-RELEVANCE-MODEL.md
+    title: Relevance Model (Stage S3)
+    tier: 4-Pipeline
+    defines:
+      - Relevance formula (6 components, weights sum 1.00)
+      - 5 intent-weighted variants
+      - Role assignment algorithm
+      - Top-K selection algorithm
+      - rules: [CAE-021, CAE-022, CAE-023, CAE-024, CAE-025]
+
+  - id: CAE-DOC-007
+    file: 07-BUDGET-MANAGER.md
+    title: Budget Manager (Stage S4)
+    tier: 4-Pipeline
+    defines:
+      - Budget partitions (guard 10%, primary 40%, context 30%, related 20%)
+      - 6 standard budget tiers (NANO to REASONING)
+      - ALLOCATE() algorithm
+      - AllocationPlan schema
+      - rules: [CAE-026, CAE-027, CAE-028, CAE-029, CAE-030]
+
+  - id: CAE-DOC-008
+    file: 08-COMPRESSION-SELECTOR.md
+    title: Compression Selector (Stage S5)
+    tier: 4-Pipeline
+    defines:
+      - Compression level selection rules by role
+      - Field inclusion by level (L1–L5)
+      - Query-type field augmentations (all 10 QTs)
+      - rules: [CAE-031, CAE-032, CAE-033, CAE-034, CAE-035]
+
+  - id: CAE-DOC-009
+    file: 09-CONTEXT-PLANNER.md
+    title: Context Planner (Stage S6)
+    tier: 4-Pipeline
+    defines:
+      - 5 assembly order principles
+      - 8-section standard order
+      - Intent-specific structure plans (7 intents)
+      - AssemblyPlan schema
+      - rules: [CAE-036, CAE-037, CAE-038, CAE-039, CAE-040]
+
+  - id: CAE-DOC-010
+    file: 10-CONTEXT-ASSEMBLER.md
+    title: Context Assembler (Stage S7)
+    tier: 4-Pipeline
+    defines:
+      - ASSEMBLE() algorithm
+      - RENDER() function (5 pack types)
+      - Preamble generation
+      - RawContextPack schema
+      - rules: [CAE-041, CAE-042, CAE-043, CAE-044, CAE-045]
+
+  - id: CAE-DOC-011
+    file: 11-PROMPT-PACK.md
+    title: Prompt Pack (AI Agent Output)
+    tier: 5-Output
+    defines:
+      - PromptPack schema
+      - BUILD_PROMPT_PACK() algorithm
+      - Guard hedge derivation
+      - Rendered format template
+      - rules: [CAE-046, CAE-047, CAE-048, CAE-049, CAE-050]
+
+  - id: CAE-DOC-012
+    file: 12-HUMAN-PACK.md
+    title: Human Pack (Developer/Architect/Executive Output)
+    tier: 5-Output
+    defines:
+      - HumanPack schema
+      - BUILD_HUMAN_PACK() algorithm
+      - 3 audience variants
+      - rules: [CAE-051, CAE-052, CAE-053, CAE-054, CAE-055]
+
+  - id: CAE-DOC-013
+    file: 13-OPERATOR-PACK.md
+    title: Operator Pack (SRE Output)
+    tier: 5-Output
+    defines:
+      - OperatorPack schema
+      - BUILD_OPERATOR_PACK() algorithm
+      - Failure mode ordering
+      - rules: [CAE-056, CAE-057, CAE-058, CAE-059, CAE-060]
+
+  - id: CAE-DOC-014
+    file: 14-SEARCH-PACK.md
+    title: Search Pack (Search UI Output)
+    tier: 5-Output
+    defines:
+      - SearchPack schema
+      - BUILD_SEARCH_PACK() algorithm
+      - Facet computation
+      - Match reason generation
+      - rules: [CAE-061, CAE-062, CAE-063, CAE-064, CAE-065]
+
+  - id: CAE-DOC-015
+    file: 15-ANTI-HALLUCINATION-GUARD.md
+    title: Anti-Hallucination Guard (Stage S8)
+    tier: 6-Safety
+    defines:
+      - 6 hallucination types (H-TYPE-01 to H-TYPE-06)
+      - RUN_AH_GUARD() algorithm
+      - GuardBlock schema
+      - Hedging rules by confidence level
+      - rules: [CAE-066, CAE-067, CAE-068, CAE-069, CAE-070]
+
+  - id: CAE-DOC-016
+    file: 16-CONTEXT-VALIDATOR.md
+    title: Context Validator (Stage S9)
+    tier: 6-Safety
+    defines:
+      - 20 validation checks (V-01 to V-20) in 6 groups
+      - VALIDATE() algorithm
+      - ValidationResult schema
+      - rules: [CAE-071, CAE-072, CAE-073, CAE-074, CAE-075]
+
+  - id: CAE-DOC-017
+    file: 17-CONTEXT-QUALITY-MODEL.md
+    title: Context Quality Model
+    tier: 6-Safety
+    defines:
+      - Quality formula: relevance×0.35 + completeness×0.30 + safety×0.25 + efficiency×0.10
+      - 5 quality thresholds (EXCELLENT to POOR)
+      - QualityReport schema
+      - rules: [CAE-076, CAE-077, CAE-078, CAE-079, CAE-080]
+
+  - id: CAE-DOC-018
+    file: 18-CONFIDENCE-PROPAGATION.md
+    title: Confidence Propagation
+    tier: 6-Safety
+    defines:
+      - Propagation invariant (context_confidence = minimum)
+      - Confidence degradation by relationship type
+      - Transitive confidence formula
+      - rules: [CAE-081, CAE-082, CAE-083, CAE-084, CAE-085]
+
+  - id: CAE-DOC-019
+    file: 19-PREFETCH-ENGINE.md
+    title: Prefetch Engine
+    tier: 7-Operational
+    defines:
+      - Trigger conditions (3 types)
+      - PrefetchTask schema
+      - Priority queue (HIGH/MEDIUM/LOW)
+      - Preemptive prefetch
+      - rules: [CAE-086, CAE-087, CAE-088, CAE-089, CAE-090]
+
+  - id: CAE-DOC-020
+    file: 20-CONTEXT-CACHE.md
+    title: Context Cache
+    tier: 7-Operational
+    defines:
+      - Two-tier cache architecture (L1 in-process, L2 shared)
+      - Cache key format
+      - TTL calculation by object state
+      - Invalidation protocol
+      - rules: [CAE-091, CAE-092, CAE-093, CAE-094, CAE-095]
+
+  - id: CAE-DOC-021
+    file: 21-PERFORMANCE-MODEL.md
+    title: Performance Model
+    tier: 7-Operational
+    defines:
+      - E2E latency targets (P50/P95/P99)
+      - Per-stage latency budgets (9 stages)
+      - Degradation protocol (3 levels)
+      - Performance anti-patterns (5 forbidden patterns)
+      - rules: [CAE-096, CAE-097, CAE-098, CAE-099, CAE-100]
+
+  - id: CAE-DOC-022
+    file: 22-FEEDBACK-MODEL.md
+    title: Feedback Model
+    tier: 7-Operational
+    defines:
+      - 2 feedback sources (explicit + implicit)
+      - FeedbackRecord schema
+      - Helpfulness score computation
+      - Feedback → KIL update protocol
+      - rules: [CAE-101, CAE-102, CAE-103, CAE-104, CAE-105]
+
+  - id: CAE-DOC-023
+    file: 23-CONTEXT-METRICS.md
+    title: Context Metrics
+    tier: 7-Operational
+    defines:
+      - 30 metrics (CAE-M-001 to CAE-M-030) in 8 groups
+      - Collection schedule
+      - Alert routing
+      - rules: [CAE-106, CAE-107, CAE-108, CAE-109, CAE-110]
+
+  - id: CAE-DOC-024
+    file: 24-CONTEXT-LEARNING.md
+    title: Context Learning
+    tier: 7-Operational
+    defines:
+      - 5 learning categories
+      - Weekly learning cycle
+      - ChangeProposal schema
+      - Learning constraints (frozen vs not frozen)
+      - rules: [CAE-111, CAE-112, CAE-113, CAE-114, CAE-115]
+
+  - id: CAE-DOC-025
+    file: 25-CAE-API.md
+    title: CAE API (External Contract)
+    tier: 8-Contracts
+    defines:
+      - AssemblyRequest / AssemblyResponse
+      - 6 error codes
+      - FeedbackRequest / FeedbackResponse
+      - SearchRequest / SearchResponse
+      - API versioning
+      - rules: [CAE-116, CAE-117, CAE-118, CAE-119, CAE-120]
+
+  - id: CAE-DOC-026
+    file: 26-CAE-CERTIFICATION.md
+    title: CAE Certification Framework
+    tier: 8-Contracts
+    defines:
+      - 4 certification levels (PROTO to CERTIFIED)
+      - 50 certification checks (CC-01 to CC-50) in 5 domains
+      - Certification report schema
+      - Recertification triggers
+
+  - id: CAE-DOC-027
+    file: 27-CAE-TESTING.md
+    title: CAE Testing Framework
+    tier: 8-Contracts
+    defines:
+      - 5 test categories (unit/integration/contract/property/performance)
+      - Canonical test corpus (100 objects)
+      - 10 critical path tests (CPT-01 to CPT-10)
+      - Design invariant test table
+      - Rule-to-test mapping
+
+  - id: CAE-DOC-028
+    file: 28-CAE-FREEZE.md
+    title: CAE Architecture Freeze
+    tier: 8-Contracts
+    defines:
+      - Freeze declaration (CAE-1.0.0, 2026-06-30)
+      - What is frozen (complete list)
+      - What is not frozen
+      - Implementation roadmap (3.0D.2 through 3.0F)
+
+  - id: CAE-DOC-NAV
+    file: README.md
+    title: Human Navigation Guide
+    tier: 1-Foundation
+
+  - id: CAE-DOC-IDX
+    file: index.yaml
+    title: Machine Index
+    tier: 1-Foundation
+
+rule_ranges:
+  - "CAE-001 to CAE-006": 02-CONTEXT-DESIGN-PRINCIPLES.md
+  - "CAE-007 to CAE-011": 03-INTENT-MODEL.md
+  - "CAE-012 to CAE-015": 04-QUERY-TYPES.md
+  - "CAE-016 to CAE-020": 05-OBJECT-SELECTOR.md
+  - "CAE-021 to CAE-025": 06-RELEVANCE-MODEL.md
+  - "CAE-026 to CAE-030": 07-BUDGET-MANAGER.md
+  - "CAE-031 to CAE-035": 08-COMPRESSION-SELECTOR.md
+  - "CAE-036 to CAE-040": 09-CONTEXT-PLANNER.md
+  - "CAE-041 to CAE-045": 10-CONTEXT-ASSEMBLER.md
+  - "CAE-046 to CAE-050": 11-PROMPT-PACK.md
+  - "CAE-051 to CAE-055": 12-HUMAN-PACK.md
+  - "CAE-056 to CAE-060": 13-OPERATOR-PACK.md
+  - "CAE-061 to CAE-065": 14-SEARCH-PACK.md
+  - "CAE-066 to CAE-070": 15-ANTI-HALLUCINATION-GUARD.md
+  - "CAE-071 to CAE-075": 16-CONTEXT-VALIDATOR.md
+  - "CAE-076 to CAE-080": 17-CONTEXT-QUALITY-MODEL.md
+  - "CAE-081 to CAE-085": 18-CONFIDENCE-PROPAGATION.md
+  - "CAE-086 to CAE-090": 19-PREFETCH-ENGINE.md
+  - "CAE-091 to CAE-095": 20-CONTEXT-CACHE.md
+  - "CAE-096 to CAE-100": 21-PERFORMANCE-MODEL.md
+  - "CAE-101 to CAE-105": 22-FEEDBACK-MODEL.md
+  - "CAE-106 to CAE-110": 23-CONTEXT-METRICS.md
+  - "CAE-111 to CAE-115": 24-CONTEXT-LEARNING.md
+  - "CAE-116 to CAE-120": 25-CAE-API.md
+
+total_kos_architecture:
+  phase_3_0A_core_kos: 43
+  phase_3_0B_quality: 32
+  phase_3_0C_certification: 32
+  phase_3_0D0_kos_final: 23
+  phase_3_0D06_kil: 33
+  phase_3_0D1_cae: 31
+  total: 194
+
+dependencies:
+  requires:
+    - phase: "3.0D.0.6"
+      name: Knowledge Intelligence Layer
+      reason: KIL intelligence blocks are the source of all rendered content
+    - phase: "3.0D.0.5"
+      name: KOS Final
+      reason: KnowledgeObject schema v1.0 and all relationship types
+
+  does_not_implement:
+    - Knowledge Runtime
+    - Knowledge Graph
+    - Compiler
+    - Query Engine
+    - AI inference
+    - Graph traversal engine
+    - Database or storage layer
