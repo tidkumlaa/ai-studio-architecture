@@ -1,0 +1,218 @@
+phase: "3.0C.5"
+name: "Knowledge Ecosystem Foundation"
+status: FROZEN
+frozen_at: "2026-06-30"
+owner: architecture-board
+depends_on: "phase-3.0C"
+document_count: 32
+
+documents:
+  - id: "KNW-KE-ARCH-000"
+    file: "00-README.md"
+    title: "Knowledge Ecosystem — Navigation Index"
+    tier: 0
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-001"
+    file: "01-KNOWLEDGE-REPOSITORY.md"
+    title: "Knowledge Repository"
+    tier: 1
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-002"
+    file: "02-KNOWLEDGE-PACKAGES.md"
+    title: "Knowledge Packages"
+    tier: 1
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-003"
+    file: "03-KNOWLEDGE-TEMPLATES.md"
+    title: "Knowledge Templates"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-004"
+    file: "04-KNOWLEDGE-STYLE-GUIDE.md"
+    title: "Knowledge Style Guide"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-005"
+    file: "05-KNOWLEDGE-NAMING-STANDARD.md"
+    title: "Knowledge Naming Standard"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-006"
+    file: "06-KNOWLEDGE-LINTER.md"
+    title: "Knowledge Linter"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-007"
+    file: "07-KNOWLEDGE-FORMATTER.md"
+    title: "Knowledge Formatter"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-008"
+    file: "08-KNOWLEDGE-CI.md"
+    title: "Knowledge CI Pipeline"
+    tier: 2
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-009"
+    file: "09-KNOWLEDGE-CATALOG.md"
+    title: "Knowledge Catalog"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-010"
+    file: "10-KNOWLEDGE-SCHEMAS.md"
+    title: "Knowledge Schemas"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-011"
+    file: "11-KNOWLEDGE-EXAMPLES.md"
+    title: "Knowledge Examples"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-012"
+    file: "12-KNOWLEDGE-GOLDEN-DATASET.md"
+    title: "Knowledge Golden Dataset"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-013"
+    file: "13-KNOWLEDGE-BENCHMARKS.md"
+    title: "Knowledge Benchmarks"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-014"
+    file: "14-KNOWLEDGE-REGISTRY.md"
+    title: "Knowledge Registry"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-015"
+    file: "15-KNOWLEDGE-SDK-CONTRACT.md"
+    title: "Knowledge SDK Contract"
+    tier: 3
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-016"
+    file: "16-KNOWLEDGE-QUALITY.md"
+    title: "Knowledge Quality"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-017"
+    file: "17-KNOWLEDGE-SCORING.md"
+    title: "Knowledge Scoring"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-018"
+    file: "18-KNOWLEDGE-COVERAGE.md"
+    title: "Knowledge Coverage"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-019"
+    file: "19-KNOWLEDGE-LIFECYCLE.md"
+    title: "Knowledge Lifecycle"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-020"
+    file: "20-KNOWLEDGE-VERIFICATION.md"
+    title: "Knowledge Verification"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-021"
+    file: "21-KNOWLEDGE-ARCHITECTURE-TESTS.md"
+    title: "Knowledge Architecture Tests"
+    tier: 4
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-022"
+    file: "22-KNOWLEDGE-REFERENCE-LIBRARY.md"
+    title: "Knowledge Reference Library"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-023"
+    file: "23-KNOWLEDGE-CANONICAL-SOURCES.md"
+    title: "Knowledge Canonical Sources"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-024"
+    file: "24-KNOWLEDGE-IMPORT-EXPORT.md"
+    title: "Knowledge Import/Export"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-025"
+    file: "25-KNOWLEDGE-CHANGE-MANAGEMENT.md"
+    title: "Knowledge Change Management"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-026"
+    file: "26-KNOWLEDGE-PACKAGE-MANAGER.md"
+    title: "Knowledge Package Manager"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-027"
+    file: "27-KNOWLEDGE-DEPENDENCY-MODEL.md"
+    title: "Knowledge Dependency Model"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-028"
+    file: "28-KNOWLEDGE-METADATA.md"
+    title: "Knowledge Metadata"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-029"
+    file: "29-KNOWLEDGE-TRACEABILITY.md"
+    title: "Knowledge Traceability"
+    tier: 5
+    status: CANONICAL
+
+  - id: "KNW-KE-ARCH-030"
+    file: "30-KNOWLEDGE-FREEZE.md"
+    title: "Knowledge Ecosystem Foundation — Architecture Freeze"
+    tier: 6
+    status: FROZEN
+
+tiers:
+  0: "Navigation"
+  1: "Repository & Packages"
+  2: "Authoring Tools"
+  3: "Infrastructure"
+  4: "Quality & Lifecycle"
+  5: "Advanced Topics"
+  6: "Freeze"
+
+key_numbers:
+  packages: 9
+  object_types: 33
+  lint_rules: 32
+  formatter_sections: 10
+  verification_checks: 50
+  quality_dimensions: 9
+  coverage_dimensions: 8
+  golden_dataset_objects: 200
+  golden_dataset_relationships: 500
+  benchmark_objects: 19
+  lifecycle_states: 6
+  change_classes: 4
+  sdk_languages: 3
