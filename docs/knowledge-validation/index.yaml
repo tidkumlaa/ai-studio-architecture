@@ -1,0 +1,437 @@
+phase: 3.0D.1.5
+name: Knowledge Validation Framework
+status: CANONICAL
+architecture_version: KVF-1.0.0
+frozen_at: "2026-06-30"
+owner: architecture-board
+
+description: >
+  The Knowledge Validation Framework (KVF) is the proof system for KOS.
+  It defines how to measure, benchmark, verify, and certify that every
+  future Runtime implementation conforms to the KOS specification.
+  This phase permanently closes the KOS architecture.
+
+mission: >
+  Everything must be measurable.
+  Everything must be reproducible.
+  Everything must produce machine-readable evidence.
+
+totals:
+  documents: 32
+  validation_domains: 7
+  kvf_rules: 140
+  certification_levels: 5
+  hallucination_types: 6
+  conformance_check_groups: 8
+  runtime_conformance_checks: 40
+  ai_task_types: 7
+  scalability_tiers: 4
+
+certification_levels:
+  - level: BRONZE
+    description: Minimum viable KOS implementation
+    min_score: 0.60
+  - level: SILVER
+    description: Standard production-ready
+    min_score: 0.72
+  - level: GOLD
+    description: High-quality production
+    min_score: 0.83
+  - level: ENTERPRISE
+    description: Enterprise-grade
+    min_score: 0.91
+  - level: RESEARCH
+    description: Reference implementation
+    min_score: 0.97
+
+hallucination_types:
+  A: Wrong fact
+  B: Wrong dependency
+  C: Wrong architecture
+  D: Wrong relationship
+  E: Wrong confidence
+  F: Unsupported conclusion
+
+token_efficiency_target: ">95% reduction vs naive baseline"
+
+performance_targets:
+  assembly_p99_standard_ms: 120
+  assembly_p99_at_1m_objects_ms: 200
+  search_p99_ms: 120
+  cold_start_p99_ms: 500
+  cache_warmup_sec: 300
+  memory_leak_threshold_mb_per_hour: 10
+
+documents:
+  - id: KVF-DOC-000
+    file: 00-README.md
+    title: Navigation
+    tier: 1-Foundation
+
+  - id: KVF-DOC-001
+    file: 01-VALIDATION-OVERVIEW.md
+    title: Validation Overview
+    tier: 1-Foundation
+    defines:
+      - 7 validation domains
+      - ValidationRun schema
+      - rules: [KVF-001, KVF-002, KVF-003, KVF-004, KVF-005]
+
+  - id: KVF-DOC-002
+    file: 02-KNOWLEDGE-CONFORMANCE.md
+    title: Knowledge Conformance
+    tier: 2-Conformance
+    defines:
+      - 8 conformance check groups (CG-1 through CG-8)
+      - 40 individual checks (KC-1.01 through KC-8.05)
+      - rules: [KVF-006, KVF-007, KVF-008, KVF-009, KVF-010]
+
+  - id: KVF-DOC-003
+    file: 03-RUNTIME-CONFORMANCE.md
+    title: Runtime Conformance
+    tier: 2-Conformance
+    defines:
+      - 8 runtime conformance groups (RCG-1 through RCG-8)
+      - 40 runtime checks (RC-1.01 through RC-8.05)
+      - rules: [KVF-011, KVF-012, KVF-013, KVF-014, KVF-015]
+
+  - id: KVF-DOC-004
+    file: 04-CONTEXT-QUALITY-VALIDATION.md
+    title: Context Quality Validation
+    tier: 3-Context
+    defines:
+      - 8 quality dimensions
+      - Quality measurement protocol
+      - Quality targets by certification level
+      - rules: [KVF-016, KVF-017, KVF-018, KVF-019, KVF-020]
+
+  - id: KVF-DOC-005
+    file: 05-CONTEXT-CORRECTNESS.md
+    title: Context Correctness
+    tier: 3-Context
+    defines:
+      - 5 correctness dimensions
+      - Field accuracy test
+      - Relationship fabrication test (must be 0)
+      - rules: [KVF-021, KVF-022, KVF-023, KVF-024, KVF-025]
+
+  - id: KVF-DOC-006
+    file: 06-TOKEN-EFFICIENCY.md
+    title: Token Efficiency
+    tier: 3-Context
+    defines:
+      - Baseline definition (human-annotated)
+      - Token reduction formula
+      - Information preservation check
+      - Target: >95% reduction
+      - rules: [KVF-026, KVF-027, KVF-028, KVF-029, KVF-030]
+
+  - id: KVF-DOC-007
+    file: 07-KNOWLEDGE-COVERAGE.md
+    title: Knowledge Coverage
+    tier: 4-Completeness
+    defines:
+      - Coverage metrics (recall, precision, F1)
+      - Missing object root cause analysis
+      - Coverage by budget tier
+      - rules: [KVF-031, KVF-032, KVF-033, KVF-034, KVF-035]
+
+  - id: KVF-DOC-008
+    file: 08-SEARCH-QUALITY.md
+    title: Search Quality
+    tier: 5-Search
+    defines:
+      - 4 benchmark tiers: 500/1K/5K/10K queries
+      - Top-1/5/Precision/Recall/MRR/NDCG/Latency
+      - Query taxonomy (5 types)
+      - rules: [KVF-036, KVF-037, KVF-038, KVF-039, KVF-040]
+
+  - id: KVF-DOC-009
+    file: 09-REASONING-QUALITY.md
+    title: Reasoning Quality
+    tier: 5-Search
+    defines:
+      - 4 question types (QT-ARCH/DEP/IMPACT/LIFECYCLE)
+      - CORRECT/UNKNOWN/HALLUCINATION classification
+      - Reasoning depth 1–4 scale
+      - rules: [KVF-041, KVF-042, KVF-043, KVF-044, KVF-045]
+
+  - id: KVF-DOC-010
+    file: 10-HALLUCINATION-MEASUREMENT.md
+    title: Hallucination Measurement
+    tier: 5-Search
+    defines:
+      - 6 hallucination types (A through F)
+      - DETECT_HALLUCINATIONS() algorithm
+      - Hallucination rate targets per level
+      - rules: [KVF-046, KVF-047, KVF-048, KVF-049, KVF-050]
+
+  - id: KVF-DOC-011
+    file: 11-CONTEXT-COMPRESSION.md
+    title: Context Compression Validation
+    tier: 3-Context
+    defines:
+      - Budget conformance (100% required)
+      - Superset property (L_{n+1} ⊇ L_n)
+      - Required fields per level
+      - Information loss quantification
+      - rules: [KVF-051, KVF-052, KVF-053, KVF-054, KVF-055]
+
+  - id: KVF-DOC-012
+    file: 12-GRAPH-VALIDATION.md
+    title: Graph Validation
+    tier: 7-Graph
+    defines:
+      - 6 graph properties (vertex/edge/bidir/acyclic/integrity/count)
+      - Graph statistics
+      - rules: [KVF-056, KVF-057, KVF-058, KVF-059, KVF-060]
+
+  - id: KVF-DOC-013
+    file: 13-REGISTRY-VALIDATION.md
+    title: Registry Validation
+    tier: 7-Graph
+    defines:
+      - 5 registry components
+      - 1000-lookup accuracy test
+      - Consistency under concurrent updates
+      - rules: [KVF-061, KVF-062, KVF-063, KVF-064, KVF-065]
+
+  - id: KVF-DOC-014
+    file: 14-METADATA-VALIDATION.md
+    title: Metadata Validation
+    tier: 4-Completeness
+    defines:
+      - 5 metadata categories (MV-CAT-1 through MV-CAT-5)
+      - Staleness thresholds
+      - Quality score accuracy (±0.01)
+      - rules: [KVF-066, KVF-067, KVF-068, KVF-069, KVF-070]
+
+  - id: KVF-DOC-015
+    file: 15-TRACEABILITY-VALIDATION.md
+    title: Traceability Validation
+    tier: 4-Completeness
+    defines:
+      - 5-level traceability chain
+      - Horizontal + vertical traceability
+      - Coverage rate ≥ 0.80
+      - rules: [KVF-071, KVF-072, KVF-073, KVF-074, KVF-075]
+
+  - id: KVF-DOC-016
+    file: 16-DEPENDENCY-VALIDATION.md
+    title: Dependency Validation
+    tier: 4-Completeness
+    defines:
+      - 5 dependency types
+      - Completeness, consistency, impact accuracy
+      - Depth sanity check (max 15)
+      - rules: [KVF-076, KVF-077, KVF-078, KVF-079, KVF-080]
+
+  - id: KVF-DOC-017
+    file: 17-LIFECYCLE-VALIDATION.md
+    title: Lifecycle Validation
+    tier: 4-Completeness
+    defines:
+      - State machine validation
+      - Transition history validity
+      - Deprecation handling
+      - Executable lifecycle rules
+      - rules: [KVF-081, KVF-082, KVF-083, KVF-084, KVF-085]
+
+  - id: KVF-DOC-018
+    file: 18-SEMANTIC-VALIDATION.md
+    title: Semantic Validation
+    tier: 5-Search
+    defines:
+      - Capability consistency (SV-1)
+      - Provides/consumes (SV-2)
+      - Extends/implements (SV-3)
+      - Replaces/conflicts (SV-4)
+      - Equivalents (SV-5)
+      - rules: [KVF-086, KVF-087, KVF-088, KVF-089, KVF-090]
+
+  - id: KVF-DOC-019
+    file: 19-AI-UNDERSTANDING.md
+    title: AI Understanding Benchmark
+    tier: 6-AI
+    defines:
+      - 3 task scales: 100/500/1000 tasks
+      - 7 task types (TT-01 through TT-07)
+      - Success/completion/reasoning/accuracy metrics
+      - rules: [KVF-091, KVF-092, KVF-093, KVF-094, KVF-095]
+
+  - id: KVF-DOC-020
+    file: 20-CROSS-AGENT-CONSISTENCY.md
+    title: Cross-Agent Consistency
+    tier: 6-AI
+    defines:
+      - 4-agent pipeline (Compile/Execute/Review/Verify)
+      - Fact/dependency/risk/confidence consistency
+      - Hallucination propagation detection
+      - rules: [KVF-096, KVF-097, KVF-098, KVF-099, KVF-100]
+
+  - id: KVF-DOC-021
+    file: 21-LONG-CONTEXT-BENCHMARK.md
+    title: Long-Context Benchmark
+    tier: 6-AI
+    defines:
+      - 4 long-context scenarios (LC-01 through LC-04)
+      - 8 validation checks (LC-V-01 through LC-V-08)
+      - Relaxed latency: 500ms P99 for >8K packs
+      - rules: [KVF-101, KVF-102, KVF-103, KVF-104, KVF-105]
+
+  - id: KVF-DOC-022
+    file: 22-COLD-START-BENCHMARK.md
+    title: Cold-Start Benchmark
+    tier: 6-AI
+    defines:
+      - 5 cold-start scenarios (CS-01 through CS-05)
+      - Warm-up curve (0 → 85% hit rate)
+      - Cache warmup time < 300s
+      - rules: [KVF-106, KVF-107, KVF-108, KVF-109, KVF-110]
+
+  - id: KVF-DOC-023
+    file: 23-GOLDEN-DATASET-VALIDATION.md
+    title: Golden Dataset Validation
+    tier: 8-Performance
+    defines:
+      - 6 dataset components (GD-1 through GD-6)
+      - Construction protocol (3 annotators, kappa >= 0.80)
+      - 500-query minimum; all 12 intent types covered
+      - rules: [KVF-111, KVF-112, KVF-113, KVF-114, KVF-115]
+
+  - id: KVF-DOC-024
+    file: 24-PERFORMANCE-VALIDATION.md
+    title: Performance Validation
+    tier: 8-Performance
+    defines:
+      - 7 performance dimensions
+      - 1-hour stability test
+      - Memory leak threshold: 10MB/hour
+      - rules: [KVF-116, KVF-117, KVF-118, KVF-119, KVF-120]
+
+  - id: KVF-DOC-025
+    file: 25-SCALABILITY-VALIDATION.md
+    title: Scalability Validation
+    tier: 8-Performance
+    defines:
+      - 4 scale tiers: 1K/10K/100K/1M objects
+      - 5 scalability invariants (SI-01 through SI-05)
+      - Sub-linear memory growth requirement
+      - rules: [KVF-121, KVF-122, KVF-123, KVF-124, KVF-125]
+
+  - id: KVF-DOC-026
+    file: 26-REGRESSION-VALIDATION.md
+    title: Regression Validation
+    tier: 8-Performance
+    defines:
+      - 5 regression categories (RR-1 through RR-5)
+      - Delta thresholds (WARNING/CRITICAL per metric)
+      - Handling policy (CRITICAL = block deploy)
+      - rules: [KVF-126, KVF-127, KVF-128, KVF-129, KVF-130]
+
+  - id: KVF-DOC-027
+    file: 27-CERTIFICATION-SCORING.md
+    title: Certification Scoring
+    tier: 9-Certification
+    defines:
+      - 5 certification levels with full requirements matrix
+      - Certification score formula (6 domains, weights sum 1.00)
+      - Hard gates per level
+      - CertificationReport schema
+      - rules: [KVF-131, KVF-132, KVF-133, KVF-134, KVF-135]
+
+  - id: KVF-DOC-028
+    file: 28-DASHBOARD.md
+    title: Validation Dashboard
+    tier: 9-Certification
+    defines:
+      - 8 dashboard sections with ASCII mockups
+      - 4 output formats: Markdown/JSON/CSV/HTML
+      - JSON output schema
+      - rules: [KVF-136, KVF-137, KVF-138, KVF-139, KVF-140]
+
+  - id: KVF-DOC-029
+    file: 29-ARCHITECTURE-FREEZE.md
+    title: Architecture Freeze
+    tier: 9-Certification
+    defines:
+      - KVF-1.0.0 freeze declaration
+      - What is frozen vs not frozen
+      - Final KOS total: 226 documents
+      - 10 invariants that never change
+      - Architecture closure statement
+
+  - id: KVF-DOC-NAV
+    file: README.md
+    title: Human Navigation Guide
+
+  - id: KVF-DOC-IDX
+    file: index.yaml
+    title: Machine Index
+
+rule_ranges:
+  "KVF-001 to KVF-005": 01-VALIDATION-OVERVIEW.md
+  "KVF-006 to KVF-010": 02-KNOWLEDGE-CONFORMANCE.md
+  "KVF-011 to KVF-015": 03-RUNTIME-CONFORMANCE.md
+  "KVF-016 to KVF-020": 04-CONTEXT-QUALITY-VALIDATION.md
+  "KVF-021 to KVF-025": 05-CONTEXT-CORRECTNESS.md
+  "KVF-026 to KVF-030": 06-TOKEN-EFFICIENCY.md
+  "KVF-031 to KVF-035": 07-KNOWLEDGE-COVERAGE.md
+  "KVF-036 to KVF-040": 08-SEARCH-QUALITY.md
+  "KVF-041 to KVF-045": 09-REASONING-QUALITY.md
+  "KVF-046 to KVF-050": 10-HALLUCINATION-MEASUREMENT.md
+  "KVF-051 to KVF-055": 11-CONTEXT-COMPRESSION.md
+  "KVF-056 to KVF-060": 12-GRAPH-VALIDATION.md
+  "KVF-061 to KVF-065": 13-REGISTRY-VALIDATION.md
+  "KVF-066 to KVF-070": 14-METADATA-VALIDATION.md
+  "KVF-071 to KVF-075": 15-TRACEABILITY-VALIDATION.md
+  "KVF-076 to KVF-080": 16-DEPENDENCY-VALIDATION.md
+  "KVF-081 to KVF-085": 17-LIFECYCLE-VALIDATION.md
+  "KVF-086 to KVF-090": 18-SEMANTIC-VALIDATION.md
+  "KVF-091 to KVF-095": 19-AI-UNDERSTANDING.md
+  "KVF-096 to KVF-100": 20-CROSS-AGENT-CONSISTENCY.md
+  "KVF-101 to KVF-105": 21-LONG-CONTEXT-BENCHMARK.md
+  "KVF-106 to KVF-110": 22-COLD-START-BENCHMARK.md
+  "KVF-111 to KVF-115": 23-GOLDEN-DATASET-VALIDATION.md
+  "KVF-116 to KVF-120": 24-PERFORMANCE-VALIDATION.md
+  "KVF-121 to KVF-125": 25-SCALABILITY-VALIDATION.md
+  "KVF-126 to KVF-130": 26-REGRESSION-VALIDATION.md
+  "KVF-131 to KVF-135": 27-CERTIFICATION-SCORING.md
+  "KVF-136 to KVF-140": 28-DASHBOARD.md
+
+total_kos_architecture:
+  phase_3_0A_core_kos: 43
+  phase_3_0B_quality: 32
+  phase_3_0C_certification: 32
+  phase_3_0D0_5_kos_final: 23
+  phase_3_0D0_6_kil: 33
+  phase_3_0D1_cae: 31
+  phase_3_0D1_5_kvf: 32
+  total: 226
+
+architecture_status: PERMANENTLY_CLOSED
+next_phase: "3.0E — Knowledge Runtime (implementation, not specification)"
+
+dependencies:
+  validates:
+    - phase: "3.0D.1"
+      name: Context Assembly Engine
+    - phase: "3.0D.0.6"
+      name: Knowledge Intelligence Layer
+    - phase: "3.0D.0.5"
+      name: KOS Final
+    - phase: "3.0C"
+      name: KOS Certification Framework
+    - phase: "3.0B"
+      name: KOS Quality Model
+    - phase: "3.0A"
+      name: Core KOS
+
+  does_not_implement:
+    - Knowledge Runtime
+    - Knowledge Graph
+    - Knowledge Compiler
+    - Context Engine
+    - AI Runtime
+    - Platform
+    - Products
