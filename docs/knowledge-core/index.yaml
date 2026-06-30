@@ -1,0 +1,215 @@
+id: kos-knowledge-core-architecture
+name: KOS Knowledge Core Architecture
+phase: "3.0C"
+status: CANONICAL
+version: "1.0.0"
+frozen_at: "2026-06-30"
+owner: architecture-board
+document_count: 43
+
+scale_targets:
+  knowledge_objects: 1_000_000
+  relationships: 10_000_000
+  sub_second_lookup: true
+
+object_model:
+  types: 33
+  base_states: 7
+  relationship_types: 24
+  evidence_types: 10
+  quality_dimensions: 9
+  confidence_levels: 5
+  state_machines: 7
+  reasoning_types: 10
+  plan_types: 6
+  kql_query_types: 8
+
+algorithms:
+  non_graph: 12
+  graph: 7
+  total: 19
+
+data_structures:
+  canonical: 15
+
+registries:
+  master: 1
+  domain: 9
+
+tiers:
+  navigation: ["00-README.md"]
+  foundation: ["01-IDENTITY-ENGINE.md", "02-UNIVERSAL-SCHEMA.md", "03-NAMESPACE-SYSTEM.md", "04-URI-SPECIFICATION.md", "05-OBJECT-INHERITANCE.md"]
+  core: ["06-RELATIONSHIP-ENGINE.md", "07-RELATIONSHIP-TYPES.md", "08-VERSION-ENGINE.md", "09-SNAPSHOT-ENGINE.md"]
+  quality: ["10-EVIDENCE-ENGINE.md", "11-QUALITY-ENGINE.md", "12-CONFIDENCE-MODEL.md", "13-TRACEABILITY.md"]
+  registry: ["14-REGISTRY-ARCHITECTURE.md", "15-OBJECT-REGISTRY.md", "16-SERVICE-REGISTRY.md", "17-API-REGISTRY.md", "18-EVENT-REGISTRY.md", "19-RUNTIME-REGISTRY.md", "20-PRODUCT-REGISTRY.md", "21-ALGORITHM-REGISTRY.md", "22-PATTERN-REGISTRY.md", "23-DATASET-REGISTRY.md"]
+  graph: ["24-KNOWLEDGE-GRAPH-MODEL.md", "25-GRAPH-ALGORITHMS.md", "26-GRAPH-INDEXES.md", "27-QUERY-LANGUAGE.md"]
+  intelligence: ["28-SEARCH-ENGINE.md", "29-SEMANTIC-LAYER.md", "30-REASONING-MODEL.md", "31-EXECUTION-CONTEXT.md"]
+  governance: ["32-METADATA-STANDARD.md", "33-LIFECYCLE-EXTENSIONS.md", "34-STATE-MACHINES.md"]
+  specification: ["35-DATA-STRUCTURES.md", "36-ALGORITHMS.md", "37-PERFORMANCE-BUDGET.md"]
+  freeze: ["38-VERIFICATION.md", "39-TEST-STRATEGY.md", "40-ARCHITECTURE-FREEZE.md"]
+
+documents:
+  - number: "00"
+    file: "00-README.md"
+    title: "README"
+    tier: navigation
+  - number: "01"
+    file: "01-IDENTITY-ENGINE.md"
+    title: "Identity Engine"
+    tier: foundation
+  - number: "02"
+    file: "02-UNIVERSAL-SCHEMA.md"
+    title: "Universal Schema"
+    tier: foundation
+  - number: "03"
+    file: "03-NAMESPACE-SYSTEM.md"
+    title: "Namespace System"
+    tier: foundation
+  - number: "04"
+    file: "04-URI-SPECIFICATION.md"
+    title: "URI Specification"
+    tier: foundation
+  - number: "05"
+    file: "05-OBJECT-INHERITANCE.md"
+    title: "Object Inheritance"
+    tier: foundation
+  - number: "06"
+    file: "06-RELATIONSHIP-ENGINE.md"
+    title: "Relationship Engine"
+    tier: core
+  - number: "07"
+    file: "07-RELATIONSHIP-TYPES.md"
+    title: "Relationship Types"
+    tier: core
+  - number: "08"
+    file: "08-VERSION-ENGINE.md"
+    title: "Version Engine"
+    tier: core
+  - number: "09"
+    file: "09-SNAPSHOT-ENGINE.md"
+    title: "Snapshot Engine"
+    tier: core
+  - number: "10"
+    file: "10-EVIDENCE-ENGINE.md"
+    title: "Evidence Engine"
+    tier: quality
+  - number: "11"
+    file: "11-QUALITY-ENGINE.md"
+    title: "Quality Engine"
+    tier: quality
+  - number: "12"
+    file: "12-CONFIDENCE-MODEL.md"
+    title: "Confidence Model"
+    tier: quality
+  - number: "13"
+    file: "13-TRACEABILITY.md"
+    title: "Traceability"
+    tier: quality
+  - number: "14"
+    file: "14-REGISTRY-ARCHITECTURE.md"
+    title: "Registry Architecture"
+    tier: registry
+  - number: "15"
+    file: "15-OBJECT-REGISTRY.md"
+    title: "Object Registry"
+    tier: registry
+  - number: "16"
+    file: "16-SERVICE-REGISTRY.md"
+    title: "Service Registry"
+    tier: registry
+  - number: "17"
+    file: "17-API-REGISTRY.md"
+    title: "API Registry"
+    tier: registry
+  - number: "18"
+    file: "18-EVENT-REGISTRY.md"
+    title: "Event Registry"
+    tier: registry
+  - number: "19"
+    file: "19-RUNTIME-REGISTRY.md"
+    title: "Runtime Registry"
+    tier: registry
+  - number: "20"
+    file: "20-PRODUCT-REGISTRY.md"
+    title: "Product Registry"
+    tier: registry
+  - number: "21"
+    file: "21-ALGORITHM-REGISTRY.md"
+    title: "Algorithm Registry"
+    tier: registry
+  - number: "22"
+    file: "22-PATTERN-REGISTRY.md"
+    title: "Pattern Registry"
+    tier: registry
+  - number: "23"
+    file: "23-DATASET-REGISTRY.md"
+    title: "Dataset Registry"
+    tier: registry
+  - number: "24"
+    file: "24-KNOWLEDGE-GRAPH-MODEL.md"
+    title: "Knowledge Graph Model"
+    tier: graph
+  - number: "25"
+    file: "25-GRAPH-ALGORITHMS.md"
+    title: "Graph Algorithms"
+    tier: graph
+  - number: "26"
+    file: "26-GRAPH-INDEXES.md"
+    title: "Graph Indexes"
+    tier: graph
+  - number: "27"
+    file: "27-QUERY-LANGUAGE.md"
+    title: "Query Language"
+    tier: graph
+  - number: "28"
+    file: "28-SEARCH-ENGINE.md"
+    title: "Search Engine"
+    tier: intelligence
+  - number: "29"
+    file: "29-SEMANTIC-LAYER.md"
+    title: "Semantic Layer"
+    tier: intelligence
+  - number: "30"
+    file: "30-REASONING-MODEL.md"
+    title: "Reasoning Model"
+    tier: intelligence
+  - number: "31"
+    file: "31-EXECUTION-CONTEXT.md"
+    title: "Execution Context"
+    tier: intelligence
+  - number: "32"
+    file: "32-METADATA-STANDARD.md"
+    title: "Metadata Standard"
+    tier: governance
+  - number: "33"
+    file: "33-LIFECYCLE-EXTENSIONS.md"
+    title: "Lifecycle Extensions"
+    tier: governance
+  - number: "34"
+    file: "34-STATE-MACHINES.md"
+    title: "State Machines"
+    tier: governance
+  - number: "35"
+    file: "35-DATA-STRUCTURES.md"
+    title: "Data Structures"
+    tier: specification
+  - number: "36"
+    file: "36-ALGORITHMS.md"
+    title: "Algorithms"
+    tier: specification
+  - number: "37"
+    file: "37-PERFORMANCE-BUDGET.md"
+    title: "Performance Budget"
+    tier: specification
+  - number: "38"
+    file: "38-VERIFICATION.md"
+    title: "Verification"
+    tier: freeze
+  - number: "39"
+    file: "39-TEST-STRATEGY.md"
+    title: "Test Strategy"
+    tier: freeze
+  - number: "40"
+    file: "40-ARCHITECTURE-FREEZE.md"
+    title: "Architecture Freeze"
+    tier: freeze
