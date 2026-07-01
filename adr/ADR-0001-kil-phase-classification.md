@@ -135,5 +135,14 @@ claim.
   CI-style verification. Classification without renaming preserves history.
 - **Treat Tier C modules as informally "part of KIL."** Rejected: they were
   never reviewed against a specification because none exists; conflating
-  them with certified KIL coverage would misrepresent the 24% actual
-  document coverage as higher than it is.
+  them with certified KIL coverage would misrepresent actual document
+  coverage as higher than it is (7/29 = 24% at the time of this ADR;
+  see `reports/kil/KIL-IMPLEMENTATION-MATRIX.md` for the current figure).
+
+---
+
+## Amendments
+
+| Date | Change |
+|---|---|
+| 2026-07-01 | Docs 01 (Self-Describing), 08 (DNA), 07 (Genome), 02 (Executable) implemented following this ADR's Tier A discipline — each cites its `KNW-KIL-DOC-0NN` ID and `KIL-NNN` rule range directly, with no step-number-only labeling. Document coverage moved from 7/29 (24%) to 11/29 (38%). No changes to the Tier A/B/C classification itself were required. See `reports/kil/KIL-IMPLEMENTATION-MATRIX.md` for full detail. |
