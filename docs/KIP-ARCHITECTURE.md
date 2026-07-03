@@ -71,6 +71,27 @@ Knowledge Graph     (self._graph: vertices + edges)
 KIG Runtime (queryable, the surface Runtime/Integration consume)
 ```
 
+### Public Application Service Layer
+
+External callers (Runtime today; MCP/Cloud in future) do not orchestrate
+Importer and KilAdapter themselves. `KipImportService`
+(`studio.kip.import_service`) is the one sanctioned public entry point that
+composes them:
+
+```
+External caller (e.g. Runtime, via KipIngestor)
+      ↓
+KipImportService.ingest(path, kig_runtime)   (Public Application Service Layer)
+      ↓ (internally, unchanged)
+Importer  →  KilAdapter.adapt_many(outcomes, kig_runtime, catalog)
+      ↓
+IngestSummary
+```
+
+Built once per session by `KipLoaderBuilder.build_import_service()` —
+construction only, no business logic in the Composition Root itself (see
+[§4](#4-dependency-rules), [§13 ADR-007](#13-architecture-decision-records-adr)).
+
 ### Layer responsibilities
 
 | Layer | Module | Responsibility | Never does |
@@ -89,6 +110,7 @@ KIG Runtime (queryable, the surface Runtime/Integration consume)
 | KIL Adapter | `studio.kip.adapter.kil_adapter` (+`id_assigner`) | Assign the permanent id; perform the one real KIL write (`kig_runtime.add_node()`) | Parse, normalize, map, validate |
 | Knowledge Registry | `tools.knowledge.kig.KIGRuntime._nodes` | Id → `KnowledgeNode` lookup | — (owned entirely by KIL) |
 | Knowledge Graph | `tools.knowledge.kig.KIGRuntime._graph` | Vertices/edges, queries, traversal | — (owned entirely by KIL) |
+| KipImportService | `studio.kip.import_service` | Public Application Service Layer — composes Importer + KilAdapter into one call for external callers (e.g. Runtime) | Parse, normalize, map, validate, or write directly — delegates every one of those to the stages above |
 
 ---
 
@@ -112,21 +134,22 @@ its own module.
 | `CandidateBuilder` | `candidate/candidate_builder.py` | Fragments → candidates, batch form | fragments + source | `tuple[KnowledgeCandidate, ...]` | Candidate stage | STABLE |
 | `CandidateRegistry` | `candidate/candidate_registry.py` | Session-scoped candidate holding | — | — | Candidate stage | STABLE |
 | `KnowledgeTypeResolver` | `mapper/knowledge_type_resolver.py` | Type-code resolution | `KnowledgeDocument` | `str` (type code) | Mapper stage | STABLE |
-| `KnowledgeMapper` | `mapper/knowledge_mapper.py` | Draft `KnowledgeObject` construction | document + candidates | `tools.knowledge.models.KnowledgeObject` (`id=""`) | Mapper stage; **1 of 5 KIL-bridge files** | STABLE |
-| `KnowledgeValidator`, `ValidationResult`, `ValidationIssue` | `validator/knowledge_validator.py` | Structural validation | `KnowledgeObject` | `ValidationResult` | Validator stage; **1 of 5 KIL-bridge files** | STABLE |
+| `KnowledgeMapper` | `mapper/knowledge_mapper.py` | Draft `KnowledgeObject` construction | document + candidates | `tools.knowledge.models.KnowledgeObject` (`id=""`) | Mapper stage; **1 of 6 KIL-bridge files** | STABLE |
+| `KnowledgeValidator`, `ValidationResult`, `ValidationIssue` | `validator/knowledge_validator.py` | Structural validation | `KnowledgeObject` | `ValidationResult` | Validator stage; **1 of 6 KIL-bridge files** | STABLE |
 | `compute_fingerprint` | `catalog/fingerprint.py` | Deterministic content hash | `KnowledgeDocument` | `str` (hex digest) | Catalog stage | STABLE |
 | `DocumentCatalog`, `CatalogEntry`, `ChangeType` | `catalog/catalog.py` | Fingerprint history, change classification | source + fingerprint | `ChangeType` | Catalog stage | STABLE |
 | `CatalogStore`, `CatalogCorruptedError` | `catalog/catalog_store.py` | JSON persistence of a `DocumentCatalog` | path | `DocumentCatalog` | Catalog persistence | STABLE |
 | `Clock`, `SystemClock` | `importer/clock.py` | Injectable time source | — | ISO timestamp string | Importer collaborator | STABLE |
-| `ImportOutcome` | `importer/import_outcome.py` | Per-file pipeline result | — | — | Importer output shape; **1 of 5 KIL-bridge files** | STABLE |
+| `ImportOutcome` | `importer/import_outcome.py` | Per-file pipeline result | — | — | Importer output shape; **1 of 6 KIL-bridge files** | STABLE |
 | `ImportPolicy` | `importer/import_policy.py` | Batch continue/stop control | — | — | Importer stage | STABLE |
 | `ImportHooks` (Protocol) | `importer/import_hooks.py` | Optional observation seam | — | — | Importer stage | STABLE |
 | `ImportSummary`, `summarize()` | `importer/import_summary.py` | Pure aggregation over outcomes | `tuple[ImportOutcome, ...]` | `ImportSummary` | Importer stage | STABLE |
 | `Importer` | `importer/importer.py` | Full-pipeline orchestration | file/directory path | `ImportOutcome` / `tuple[ImportOutcome, ...]` | Importer stage | STABLE |
 | `IdAssigner` | `adapter/id_assigner.py` | Deterministic permanent id generation | source path | `str` (`"KIP-{SLUG}"`) | KIL Adapter stage | STABLE |
-| `KilAdapter`, `AdaptOutcome`, `AdaptStatus` | `adapter/kil_adapter.py` | The one real KIL write | `ImportOutcome` + `KIGRuntime` + `DocumentCatalog` | `AdaptOutcome` | KIL Adapter stage; **1 of 5 KIL-bridge files** | STABLE |
-| `KipLoaderBuilder` | `composition_root.py` | **Sole** composition root — constructs every collaborator above | — | fully-wired collaborators | Whole package | STABLE (name frozen since Phase 1) |
-| CLI `main()` | `cli.py` | `kip ingest <path>` entry point | argv | process exit code | CLI stage; **1 of 5 KIL-bridge files** | STABLE |
+| `KilAdapter`, `AdaptOutcome`, `AdaptStatus` | `adapter/kil_adapter.py` | The one real KIL write | `ImportOutcome` + `KIGRuntime` + `DocumentCatalog` | `AdaptOutcome` | KIL Adapter stage; **1 of 6 KIL-bridge files** | STABLE |
+| `KipLoaderBuilder` | `composition_root.py` | **Sole** composition root — constructs every collaborator above, including `KipImportService` (via `build_import_service()`); construction only, no business logic | — | fully-wired collaborators | Whole package | STABLE (name frozen since Phase 1) |
+| `KipImportService`, `IngestSummary` | `import_service.py` | Public Application Service Layer — the sanctioned entry point for external callers; composes `Importer` + `KilAdapter` for one path | file/directory path + `KIGRuntime` | `IngestSummary` (imported/skipped/failed counts) | Public Application Service Layer; **1 of 6 KIL-bridge files** | STABLE |
+| CLI `main()` | `cli.py` | `kip ingest <path>` entry point | argv | process exit code | CLI stage; **1 of 6 KIL-bridge files** | STABLE |
 | Individual sub-loaders, sub-analyzers, sub-extractors (e.g. `HeadingExtractor`, `TableAnalyzer`) | respective `*/*.py` | Single-responsibility collaborators composed by their parent stage | — | — | Their parent stage | INTERNAL — construct only via `KipLoaderBuilder` or the parent stage, never call directly from outside the package |
 
 ---
@@ -136,7 +159,7 @@ its own module.
 ### Allowed
 
 - Any `studio.kip` file may depend on: the Python standard library, `python-docx`, `pypdf`, `openpyxl` (the Phase 1 third-party allowlist), and sibling `studio.kip` modules.
-- Exactly 5 files may import `tools.knowledge` (the "KIL bridge set"): `mapper/knowledge_mapper.py`, `validator/knowledge_validator.py`, `importer/import_outcome.py`, `adapter/kil_adapter.py`, `cli.py`. Each carries or constructs a real `KnowledgeObject`/`KIGRuntime` and would lose type safety with a stand-in type.
+- Exactly 6 files may import `tools.knowledge` (the "KIL bridge set"): `mapper/knowledge_mapper.py`, `validator/knowledge_validator.py`, `importer/import_outcome.py`, `adapter/kil_adapter.py`, `cli.py`, `import_service.py`. Each carries or constructs a real `KnowledgeObject`/`KIGRuntime` and would lose type safety with a stand-in type. `import_service.py` (Phase 13, the Public Application Service Layer) is the newest member — `composition_root.py` deliberately does **not** join this set; it only constructs a `KipImportService`, never calls into `KIGRuntime` itself (Composition Root discipline, [§13 ADR-007](#13-architecture-decision-records-adr)).
 - Only `adapter/kil_adapter.py` may call `KIGRuntime.add_node()`.
 - Only `candidate/candidate_factory.py` may construct `KnowledgeCandidate`.
 - Only `mapper/knowledge_mapper.py` and `validator/knowledge_validator.py` construct or accept a `tools.knowledge.models.KnowledgeObject` as a first-class value (Mapper constructs it; Validator inspects it — neither hands construction to any other file).
@@ -146,7 +169,9 @@ its own module.
 | Rule | Enforced by |
 |---|---|
 | No `studio.kip` file imports `platform` or `platform_kernel` | `test_no_forbidden_top_level_imports` |
-| No `studio.kip` file outside the 5-file bridge set imports `tools` (`tools.knowledge`) | `test_only_designated_files_import_tools_knowledge` |
+| No `studio.kip` file outside the 6-file bridge set imports `tools` (`tools.knowledge`) | `test_only_designated_files_import_tools_knowledge` |
+| `composition_root.py` (the Composition Root) imports zero `tools.knowledge` — construction only, no business logic | `test_composition_root_has_no_kil_or_platform_dependencies` |
+| `studio.runtime` may depend on `studio.kip` only through `studio.kip.composition_root` (construction) and `studio.kip.import_service` (`KipImportService`, business logic) — never `mapper`/`validator`/`catalog`/`adapter`/`importer` internals | `test_kip_dependency_limited_to_composition_root` (Runtime's own dependency-footprint test) |
 | No `studio.kip` file imports `studio.runtime` or `studio.integration`, in any form | `test_never_imports_studio_runtime_or_studio_integration` (AST-based — a docstring mentioning the name does not trip it) |
 | No third-party import outside the Phase 1 allowlist (`docx`, `pypdf`, `openpyxl`) | `test_third_party_imports_limited_to_phase_1_allowlist` |
 | No file other than `adapter/kil_adapter.py` calls `.add_node()` | `test_only_kil_adapter_calls_add_node` |
@@ -179,6 +204,7 @@ them.
 | `KilAdapter` | The single write boundary into KIL (Gate 1) — its name and `adapt()`/`adapt_many()` signatures are the permanent contract every future caller (CLI, Runtime, MCP, …) integrates against |
 | `IdAssigner` | The sole owner of permanent id generation (Gate 2); its determinism (`same path → same id, forever`) is load-bearing for idempotent re-ingestion |
 | `KipLoaderBuilder` | Composition root; name frozen since Phase 1 even though scope grew far past "loader" — new phases add a `build_*()` method here, never a second composition root |
+| `KipImportService` | The Public Application Service Layer's permanent entry point (Phase 13) — external callers (Runtime, future MCP/Cloud) integrate against `KipImportService.ingest()`, never against `Importer`/`KilAdapter` individually |
 
 Any change to one of these that is not additive (rename, signature-breaking
 change, relocation, removal) requires a new architecture decision, not a
@@ -198,11 +224,11 @@ happens by **adding**, never by modifying a frozen boundary.
 | New extractor | New sub-extractor composed into `Extractor`, following the existing 5-extractor pattern; output is still a `CandidateFragment`, routed through `CandidateFactory` unchanged | Code-block extractor |
 | New validator rule | New `_check_*` method inside `KnowledgeValidator.validate()` | Duplicate-id check (deferred, becomes real once ids are populated pre-validation) |
 | New fingerprint algorithm | `compute_fingerprint`'s signature (`KnowledgeDocument -> str`) is the contract; internal hashing strategy may evolve (e.g. multi-dimensional fingerprint, precedented by `platform/knowledge_runtime`'s `KnowledgeFingerprint`) without callers changing | Structure-aware or metadata-aware fingerprinting |
-| Importer hooks | Implement the `ImportHooks` protocol and pass it to `KipLoaderBuilder.build_importer(hooks=...)` | Progress reporting, structured logging, metrics emission |
+| Importer hooks | Implement the `ImportHooks` protocol and pass it to `KipLoaderBuilder.build_import_service(hooks=...)` | Progress reporting, structured logging, metrics emission |
 | CLI | `studio/kip/cli.py` is its own entry point (`kip` console script); new subcommands are added there, never merged into `studio.runtime`'s CLI | `kip validate`, `kip diff` |
-| Runtime | Consumes KIP exclusively through `KipLoaderBuilder` → `Importer` → `KilAdapter`, sharing a caller-owned `KIGRuntime` (see [§9](#9-runtime-integration)) | Runtime-triggered ingestion of user-uploaded documents |
+| Runtime | Consumes KIP exclusively through `KipLoaderBuilder.build_import_service()` → `KipImportService` (the Public Application Service Layer), sharing a caller-owned `KIGRuntime` (see [§9](#9-runtime-integration)) — implemented, not hypothetical, as of Phase 13 | Runtime-triggered ingestion of user-uploaded documents (`aistudio ingest <path>`, live today) |
 | VS Code | Never talks to KIP directly — only through Runtime (see [§10](#10-vs-code-integration)) | "Import this file into knowledge base" command |
-| MCP / Cloud | Same rule as Runtime: integrate through `KipLoaderBuilder`'s public API, never through internal modules or by calling `KIGRuntime.add_node()` directly | Remote ingestion endpoint |
+| MCP / Cloud | Same rule as Runtime: integrate through `KipImportService`, never through internal modules or by calling `KIGRuntime.add_node()` directly | Remote ingestion endpoint |
 
 ---
 
@@ -259,31 +285,43 @@ classified it as NEW/MODIFIED/UNCHANGED; the adapter's own idempotency
 
 ## 9. Runtime Integration
 
-**Current state: not wired.** `studio.runtime` and `studio.kip` are fully
-separate today, by explicit decision — `studio/runtime` is never imported by
-any file in `studio/kip` (enforced, [§4](#4-dependency-rules)), and KIP has
-its own standalone `kip` CLI rather than being merged into
-`aistudio`/`claude-studio`.
+**Current state: wired (Phase 13).** `aistudio ingest <path>` is a real,
+shipped command. Runtime consumes KIP exclusively through `KipImportService`
+(the Public Application Service Layer, [§3](#3-public-apis)) — it never
+imports `Importer`, `KnowledgeMapper`, `KnowledgeValidator`,
+`DocumentCatalog`, `KilAdapter`, or `IdAssigner` directly, enforced by
+Runtime's own dependency-footprint test
+(`test_kip_dependency_limited_to_composition_root`).
 
-This section defines the contract Runtime **must** follow *if and when* that
-decision is revisited. It does not implement or schedule that work.
+- Runtime must never call `KIGRuntime.add_node()` directly. The only sanctioned write path is `KilAdapter.adapt()` / `adapt_many()`, reached exclusively through `KipImportService`.
+- Runtime must never bypass `Importer` — i.e. never construct a `KnowledgeObject` itself and hand it straight to `KilAdapter`. Documents enter the graph only by going through the full Loader→…→Validator pipeline, which `KipImportService` runs unchanged.
+- Runtime's own Composition Root (`StudioRuntimeBuilder`) imports `KipLoaderBuilder` (KIP's Composition Root) purely to call `build_import_service()` — composition-root-to-composition-root wiring, the same pattern already used for `AgentBridgeBuilder`. The actual business-logic collaborator Runtime holds and calls per request (`KipIngestor`) imports only `KipImportService` — never `KipLoaderBuilder`, never any KIP internal.
+- The `KIGRuntime` instance KIP writes into is the same caller-owned, long-lived instance the rest of AI Studio uses — matching the existing pattern in `studio.integration.agent_bridge.AgentBridgeBuilder.with_kig(kig)` ("build once per process/session, reuse across requests"). `StudioRuntimeBuilder` builds exactly one `KIGRuntime` (gated on `CapabilityFlags.document_parsing_enabled`, default `False`) and hands the *same instance* to both `AgentBridgeBuilder.with_kig()` and `KipImportService` — proven, not assumed: ingesting a document and then calling `AgentBridge.search()` finds it, using the identical object.
 
-- Runtime must never call `KIGRuntime.add_node()` directly. The only sanctioned write path is `KilAdapter.adapt()` / `adapt_many()`.
-- Runtime must never bypass `Importer` — i.e. never construct a `KnowledgeObject` itself and hand it straight to `KilAdapter`. Documents enter the graph only by going through the full Loader→…→Validator pipeline.
-- Runtime should only invoke KIP through `KipLoaderBuilder`'s public `build_*()` methods — the composition root — never by importing and constructing individual stage collaborators directly.
-- The `KIGRuntime` instance KIP writes into must be the same caller-owned, long-lived instance the rest of AI Studio already uses — matching the existing pattern in `studio.integration.agent_bridge.AgentBridgeBuilder.with_kig(kig)` ("build once per process/session, reuse across requests"). KIP never constructs its own `KIGRuntime`; a Runtime integration must not either — it should build or receive one and hand the *same instance* to both `KilAdapter` and `AgentBridgeBuilder`.
-
-Sanctioned integration shape (architecture only, not implemented):
+Implemented integration shape:
 
 ```
-Runtime request
+User: aistudio ingest <path>
       ↓
-KipLoaderBuilder().build_importer() → Importer.import_file()/import_directory()
+StudioRuntime.execute_ingest(path)
       ↓
-KipLoaderBuilder().build_kil_adapter() → KilAdapter.adapt()/adapt_many(kig_runtime=<shared instance>)
+KipIngestor.ingest(path)                              (Runtime-owned, DI-injected)
+      ↓
+KipImportService.ingest(path, kig_runtime)             (KIP's Public Application Service Layer)
+      ↓ (internally, unchanged)
+Importer.import_file()/import_directory()  →  KilAdapter.adapt_many(outcomes, kig_runtime, catalog)
+      ↓
+IngestSummary → ImportRuntimeResult
       ↓
 same <shared KIGRuntime instance> ── also passed to ── AgentBridgeBuilder.with_kig(...)
+      ↓
+AgentBridge.ask()/search() sees the newly ingested node immediately
 ```
+
+`KipLoaderBuilder.build_import_service()` is construction only — it builds
+a `DocumentCatalog`, an `Importer` bound to it, and a `KilAdapter`, then
+hands back a `KipImportService`. No pipeline logic lives in the Composition
+Root ([§13 ADR-007](#13-architecture-decision-records-adr)).
 
 ---
 
@@ -302,7 +340,7 @@ VS Code
    ↓
 Runtime
    ↓
-KIP  (KipLoaderBuilder → Importer → KilAdapter, per §9)
+KIP  (KipImportService, the Public Application Service Layer — per §9)
    ↓
 KIL
 ```
@@ -447,6 +485,13 @@ add loaders, phases, or extensions with zero risk to Runtime's certified
 surface. If deep integration is wanted later, that is new scope requiring a
 fresh decision, not a reopening of this one (see [§20](#20-future-governance)).
 
+**Update (Phase 13).** That fresh decision was made: Runtime now depends on
+`studio.kip`, narrowly, through `KipLoaderBuilder.build_import_service()`
+(construction) and `KipImportService` (business logic) only — never on any
+KIP internal. This does not reopen ADR-004; it exercises exactly the "new
+scope, fresh decision" escape hatch this ADR always anticipated. See
+[§9](#9-runtime-integration), [§15](#15-package-dependency-diagram).
+
 ### ADR-005 — KilAdapter is the only write boundary
 
 **Context.** Once a validated draft `KnowledgeObject` exists, something has
@@ -485,60 +530,86 @@ identity generation. Re-ingesting an unchanged file is provably idempotent
 (verified live against a real `KIGRuntime` in Phase 8, not just asserted).
 CI can assert reproducibility rather than trust it.
 
+### ADR-007 — Business logic separated from the Composition Root into KipImportService
+
+**Context.** Phase 13's first Runtime-integration pass added an `ingest()`
+method directly to `KipLoaderBuilder` to compose `Importer` + `KilAdapter`
+for external callers. Architectural review flagged this as a Composition
+Root purity violation: `KipLoaderBuilder`'s entire contract (since Phase 1)
+is construction and wiring — it must never execute business behavior.
+
+**Decision.** Extract `ingest()` and its `IngestSummary` return type into a
+new class, `KipImportService` (`studio.kip.import_service`) — KIP's Public
+Application Service Layer, the sanctioned entry point external callers
+integrate against. `KipLoaderBuilder.build_import_service()` replaces
+`ingest()`: it only constructs a `DocumentCatalog`, an `Importer` bound to
+it, and a `KilAdapter`, and returns a `KipImportService` wired with all
+three — no branching, no loops, no calls into either collaborator.
+
+**Consequences.** `composition_root.py` reverts to needing zero
+`tools.knowledge` imports, restoring the Composition Root's original,
+pre-Phase-13 purity. The KIL-bridge file count could not return to 5 —
+something still has to type-hint a real `KIGRuntime` to call
+`KilAdapter.adapt_many()` — but that necessity relocated from the
+Composition Root (the wrong place) to `import_service.py` (a purpose-built
+business-logic module, the right place). Runtime's own dependency
+footprint narrows further as a result: its business-logic collaborator
+(`KipIngestor`) now imports only `KipImportService`, never
+`KipLoaderBuilder` at all.
+
 ---
 
 ## 14. Boundary Diagram
 
-KIP's boundaries do not form the single linear chain a naive reading of
-"Runtime → KIP → KIL" might suggest. Two independent verticals exist today,
-confirmed by the actual import graph ([§15](#15-package-dependency-diagram)):
+As of Phase 13, Runtime and KIP are genuinely connected — the diagram below
+is the real, implemented shape, confirmed by the actual import graph
+([§15](#15-package-dependency-diagram)), not a hypothetical.
 
-### Current state (implemented)
+### Runtime ↔ KIP (implemented)
 
 ```
-   ┌─────────────────────────┐        ┌──────────────────────────┐
-   │   studio.runtime          │        │   studio.kip                │
-   │   (CLI: aistudio /        │        │   (CLI: kip)                │
-   │    claude-studio)         │        │                              │
-   └───────────┬───────────────┘        └───────────┬──────────────────┘
-               ↓                                     ↓
-   ┌─────────────────────────┐                       │
-   │   studio.integration      │                       │
-   │   (AgentBridgeBuilder,    │                       │
-   │    *Service classes)      │                       │
-   └───────────┬───────────────┘                       │
-               ↓                                     ↓
-               └───────────────────┬──────────────────┘
-                                    ↓
-                    Single Write Boundary
-                    (only KilAdapter.adapt() calls add_node();
-                     Runtime/Integration call add_node() via
-                     tools.knowledge.generate_kig_reports.build_kig
-                     and direct KIGRuntime construction — a
-                     separate, pre-existing path, not through KIP)
-                                    ↓
-                          tools.knowledge (KIL)
-                     ┌──────────────┴───────────────┐
-                     ↓                               ↓
-             Knowledge Registry                Knowledge Graph
-             (KIGRuntime._nodes)              (KIGRuntime._graph)
+studio.runtime (CLI: aistudio / claude-studio)
+      │
+      ├── StudioRuntimeBuilder calls KipLoaderBuilder.build_import_service()
+      │        [composition-root-to-composition-root wiring only] → KipImportService
+      │
+      ├── AgentBridgeBuilder.with_kig(shared_kig) → studio.integration
+      │        (AgentBridge, *Service classes)
+      │
+      └── same shared KIGRuntime instance passed to both branches above
+                      ↓                                    ↓
+              KipImportService                     studio.integration
+        (Public Application Service Layer)          → tools.knowledge
+        Importer → KilAdapter (unchanged)
+                      ↓                                    ↓
+                      └──────────────┬─────────────────────┘
+                                      ↓
+                        Single Write Boundary
+              (only KilAdapter.adapt()/adapt_many() calls
+                     add_node() — Gate 1, enforced)
+                                      ↓
+                            tools.knowledge (KIL)
+                         ┌────────────┴────────────┐
+                         ↓                          ↓
+                 Knowledge Registry           Knowledge Graph
+                (KIGRuntime._nodes)          (KIGRuntime._graph)
 ```
 
 `studio.vscode` (a TypeScript extension under `studio/vscode/extension`) is
-not part of either vertical today — it contains no reference to
-`studio.kip`, `studio.runtime`, or any Python execution path. It is a
-standalone, unwired artifact from the diagram's perspective.
+not part of this diagram — it contains no reference to `studio.kip`,
+`studio.runtime`, or any Python execution path. It is a standalone, unwired
+artifact from the diagram's perspective.
 
-### Sanctioned future state (contract only — not implemented, per §9/§10)
+### VS Code ↔ Runtime (contract only — not implemented, per §10)
 
 ```
-VS Code  →  Runtime  →  KIP  →  Single Write Boundary (KilAdapter)  →  KIL  →  Knowledge Graph
+VS Code  →  Runtime  →  KIP (KipImportService)  →  Single Write Boundary (KilAdapter)  →  KIL  →  Knowledge Graph
 ```
 
-This is the shape [§9](#9-runtime-integration) and
-[§10](#10-vs-code-integration) already commit future work to *if* Runtime
-wiring happens — it is not today's reality, and this document does not
-schedule or propose building it.
+Everything left of "Runtime" above is still a future contract, not
+today's reality — [§10](#10-vs-code-integration) commits future work to
+this shape *if and when* a VS Code extension is wired up; this document
+does not schedule or propose building it.
 
 ### What crosses each boundary
 
@@ -547,6 +618,8 @@ schedule or propose building it.
 | CLI → `studio.runtime` | `StudioRuntimeBuilder`, `StudioRuntime`, `Task` |
 | `studio.runtime` → `studio.integration` | `AgentBridgeBuilder`, `AgentBridge`, its `*Service` classes |
 | `studio.integration` → KIL | `KIGRuntime` (via `with_kig()` / `build_kig()`), `tools.knowledge.models.*` |
+| `studio.runtime`'s Composition Root → `studio.kip`'s Composition Root | `KipLoaderBuilder.build_import_service()` — construction only |
+| `studio.runtime`'s business logic (`KipIngestor`) → `studio.kip` | `KipImportService` only — never `Importer`/`KilAdapter`/`DocumentCatalog`/`IdAssigner` directly |
 | CLI (`kip`) → `studio.kip` | `KipLoaderBuilder` (composition root) |
 | `studio.kip` internal pipeline | `KnowledgeDocument` → … → `ImportOutcome` (all STABLE types in [§3](#3-public-apis)) |
 | `studio.kip` → KIL (Single Write Boundary) | `KilAdapter.adapt()`/`adapt_many()` only — the sole crossing point, per Gate 1 |
@@ -558,20 +631,22 @@ schedule or propose building it.
 
 Verified directly against the import graph (not inferred): `tools.knowledge`
 imports nothing from `studio.*`; `studio.integration` never imports
-`studio.kip`; `studio.runtime` never imports `studio.kip`; `studio.kip`
-never imports `studio.runtime` or `studio.integration` (all four confirmed
-by direct search, the last two also enforced by
-`test_never_imports_studio_runtime_or_studio_integration`).
+`studio.kip`; `studio.kip` never imports `studio.runtime` or
+`studio.integration` (enforced by
+`test_never_imports_studio_runtime_or_studio_integration`). **As of Phase
+13, `studio.runtime` *does* import `studio.kip`** — narrowly and by design,
+not the "no dependency either direction" this document previously
+described. That statement is now corrected below.
 
 ```
 studio.vscode  (TypeScript, no Python import graph — isolated today)
 
 studio.runtime  ──depends on──▶  studio.integration  ──depends on──▶  tools.knowledge
-      │                                                                      ▲
-      │                                                                      │
-      └──────────────────────  (no dependency either direction)  ───────────┘
-                                                                              │
-studio.kip  ─────────────────────depends on (5 bridge files only)───────────┘
+      │
+      ├──depends on (construction only)──▶  studio.kip.composition_root  (KipLoaderBuilder)
+      └──depends on (business logic)─────▶  studio.kip.import_service    (KipImportService)
+                                                       │
+studio.kip  ─────────────────────depends on (6 bridge files only)────────▶  tools.knowledge
 
 CLI (aistudio / claude-studio)  ──depends on──▶  studio.runtime
 CLI (kip)                       ──depends on──▶  studio.kip
@@ -579,13 +654,15 @@ CLI (kip)                       ──depends on──▶  studio.kip
 
 | From | To | Allowed? | Why |
 |---|---|---|---|
-| `studio.kip` | `tools.knowledge` | Allowed, restricted to 5 named files | Those files carry real `KnowledgeObject`/`KIGRuntime` values; a stand-in type would lose type safety |
+| `studio.kip` | `tools.knowledge` | Allowed, restricted to 6 named files | Those files carry real `KnowledgeObject`/`KIGRuntime` values; a stand-in type would lose type safety |
 | `studio.integration` | `tools.knowledge` | Allowed | Integration's entire purpose is bridging Runtime to KIL |
 | `studio.runtime` | `studio.integration` | Allowed | Documented dependency in Runtime's own `__init__.py` |
-| `studio.kip` | `studio.runtime` | **Forbidden** | ADR-004 — intentional separation; enforced by `test_never_imports_studio_runtime_or_studio_integration` |
+| `studio.runtime` | `studio.kip.composition_root` | **Allowed, restricted** | Composition-root-to-composition-root wiring — `StudioRuntimeBuilder` calls `KipLoaderBuilder.build_import_service()` only, mirroring the pre-existing `AgentBridgeBuilder` pattern |
+| `studio.runtime` | `studio.kip.import_service` | **Allowed, restricted** | The one business-logic symbol (`KipImportService`) Runtime's `KipIngestor` may hold; enforced by `test_kip_dependency_limited_to_composition_root` |
+| `studio.runtime` | `studio.kip.mapper` / `.validator` / `.catalog` / `.adapter` / `.importer` | **Forbidden** | Those remain KIP-internal implementation details; enforced by `test_kip_dependency_limited_to_composition_root` |
+| `studio.kip` | `studio.runtime` | **Forbidden** | ADR-004's separation still holds in this direction; enforced by `test_never_imports_studio_runtime_or_studio_integration` |
 | `studio.kip` | `studio.integration` | **Forbidden** | Same rule, same enforcement |
-| `studio.runtime` | `studio.kip` | **Forbidden** (not currently enforced by a KIP-side test, since the violation would live in Runtime, not KIP — but confirmed absent today) | ADR-004; no sanctioned reason for Runtime to reach into KIP internals rather than its public API |
-| `studio.integration` | `studio.kip` | **Forbidden** (same caveat) | Same rule |
+| `studio.integration` | `studio.kip` | **Forbidden** | Only `studio.runtime` itself integrates with KIP — Integration's own dependency footprint is unchanged by Phase 13 |
 | `tools.knowledge` | anything under `studio.*` | **Forbidden** | KIL is the foundation layer; it must never depend upward on anything that depends on it |
 | `studio.kip` | `platform` / `platform_kernel` | **Forbidden** | [§4](#4-dependency-rules), enforced by `test_no_forbidden_top_level_imports` |
 | `studio.vscode` | `studio.kip` (directly) | **Forbidden** by contract ([§10](#10-vs-code-integration)) | Only sanctioned path is VS Code → Runtime → KIP |
@@ -621,6 +698,7 @@ reached a 2.0 boundary yet.
 | `IdAssigner` | 1.0 |
 | `KilAdapter` / `AdaptOutcome` / `AdaptStatus` | 1.0 |
 | `KipLoaderBuilder` | 1.0 |
+| `KipImportService` / `IngestSummary` | 1.0 |
 | CLI (`kip ingest`) | 1.0 |
 
 **Versioning rule.** An **additive** extension — a new optional constructor
@@ -656,7 +734,7 @@ have any members today.
 
 | Component | Level |
 |---|---|
-| All classes/functions listed in [§3](#3-public-apis)'s table as STABLE (every stage's primary class, every frozen data model, `KipLoaderBuilder`, the CLI) | STABLE |
+| All classes/functions listed in [§3](#3-public-apis)'s table as STABLE (every stage's primary class, every frozen data model, `KipLoaderBuilder`, `KipImportService`, the CLI) | STABLE |
 | Individual sub-loaders, sub-analyzers (`heading_analyzer.py`, `table_analyzer.py`, `hyperlink_analyzer.py`, `metadata_analyzer.py`), sub-extractors (`heading_extractor.py`, `table_extractor.py`, `metadata_extractor.py`, `hyperlink_extractor.py`, `list_extractor.py`) | INTERNAL |
 | — | EXPERIMENTAL: **none exist in `studio.kip` today.** Every shipped class is either STABLE or INTERNAL; nothing is behind a flag or partially built. (Contrast with `studio.runtime`'s `CapabilityFlags.document_parsing_enabled`/`workspace_indexing_enabled`, which are the closest thing to an EXPERIMENTAL marker in the wider codebase, and both are `False` by default, outside KIP itself.) |
 
@@ -679,8 +757,9 @@ of these are new constraints.
 - Never assign a permanent id outside `IdAssigner`. Never hand-write a `"KIP-…"` id string or replicate its slug algorithm elsewhere.
 - Never call `KIGRuntime.add_node()` outside `KilAdapter`.
 - Always construct KIP collaborators through `KipLoaderBuilder`. Never `import` and directly instantiate an internal stage class from outside `studio.kip`.
+- Always integrate with KIP from outside the package through `KipImportService` (the Public Application Service Layer), never by holding an `Importer`/`KilAdapter`/`DocumentCatalog` reference directly. `KipLoaderBuilder` itself is only for construction (e.g. Runtime's own Composition Root calling `build_import_service()`) — never for business logic.
 - Never construct a `KnowledgeCandidate` outside `CandidateFactory`.
-- Never violate a dependency rule in [§4](#4-dependency-rules) — in particular, never add a `tools.knowledge` import to any file outside the 5-file bridge set, and never add a `studio.runtime`/`studio.integration` import anywhere in `studio.kip`.
+- Never violate a dependency rule in [§4](#4-dependency-rules) — in particular, never add a `tools.knowledge` import to any file outside the 6-file bridge set, and never add a `studio.runtime`/`studio.integration` import anywhere in `studio.kip`.
 - Never bypass or weaken an AST-based dependency-enforcement test in `tests/test_kip_dependency_footprint.py` to make a change pass — a failing footprint test means the change is architecturally wrong, not that the test is outdated.
 - Never rename, relocate, or change the signature of anything listed in [§5](#5-frozen-boundaries) — extend additively instead.
 - Never introduce wall-clock time, randomness, or UUID generation into any stage other than the named `Clock` exception ([§7](#7-determinism-rules)).
@@ -706,7 +785,9 @@ Generic by design — applies to any change, not just a specific phase.
 □ Any new behavior is additive, not a breaking change to a frozen boundary (§5)
 □ tests/test_kip_dependency_footprint.py passes in full
 □ Composition Root (KipLoaderBuilder) remains the only place collaborators are constructed
-□ tools.knowledge import surface still limited to exactly the 5 designated bridge files
+□ tools.knowledge import surface still limited to exactly the 6 designated bridge files
+□ Composition Root (KipLoaderBuilder) contains construction/wiring only -- no business logic
+□ Runtime (if touched) imports only KipLoaderBuilder (construction) and KipImportService (business logic) from studio.kip
 □ No new hidden I/O, hidden mutable state, or implicit singleton introduced
 ```
 
@@ -726,7 +807,7 @@ KIP's architecture. Future architectural change follows these rules:
 - **Breaking changes require a new Architecture Decision Record.** Any rename, signature change, removal, or redefinition of a frozen boundary ([§5](#5-frozen-boundaries)) must be preceded by a new ADR (continuing the numbering in [§13](#13-architecture-decision-records-adr)) documenting the context, the decision, and the consequences — the same standard ADR-001 through ADR-006 were held to.
 - **Dependency rules cannot be bypassed.** The allowed/forbidden dependency directions in [§4](#4-dependency-rules) and [§15](#15-package-dependency-diagram) hold regardless of short-term convenience; a change that requires violating one requires revisiting the rule itself, explicitly, via a new ADR — not a one-off exception.
 - **New functionality must be additive.** New loaders, analyzers, extractors, validators, fingerprint strategies, or Importer hooks are added through the extension points in [§6](#6-extension-points), never by modifying a frozen class's existing behavior.
-- **Runtime, VS Code, MCP, Cloud, Search, and AI features must integrate through existing public APIs.** Per [§9](#9-runtime-integration) and [§10](#10-vs-code-integration): through `KipLoaderBuilder` → `Importer` → `KilAdapter`, sharing a caller-owned `KIGRuntime` — never by importing an INTERNAL collaborator, never by writing to KIL through any path other than `KilAdapter`.
+- **Runtime, VS Code, MCP, Cloud, Search, and AI features must integrate through existing public APIs.** Per [§9](#9-runtime-integration) and [§10](#10-vs-code-integration): through `KipImportService` (the Public Application Service Layer), sharing a caller-owned `KIGRuntime` — never by importing an INTERNAL collaborator, never by writing to KIL through any path other than `KilAdapter`.
 
 This section describes governance only. It does not propose, schedule, or
 scope any specific future implementation — those decisions are made when
