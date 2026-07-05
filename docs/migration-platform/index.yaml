@@ -1,0 +1,124 @@
+capability: migration-platform
+domain: DOM-KNOWLEDGE
+version: "1.0.0"
+status: approved
+owner: Chief Knowledge Architect
+phase: 2.0D.1
+last_updated: 2026-06-29
+
+documents:
+  - id: KA-PLAT-001
+    type: index
+    file: README.md
+    title: "Knowledge Migration Platform — Overview"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-002
+    type: architecture
+    file: 01-MIGRATION-ENGINE-ARCHITECTURE.md
+    title: "Migration Engine Architecture"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-003
+    type: specification
+    file: 02-REPOSITORY-SCANNER.md
+    title: "Repository Scanner"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-004
+    type: specification
+    file: 03-DOCUMENT-CLASSIFIER.md
+    title: "Document Classifier"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-005
+    type: specification
+    file: 04-KNOWLEDGE-SPLITTER.md
+    title: "Knowledge Splitter"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-006
+    type: specification
+    file: 05-METADATA-GENERATOR.md
+    title: "Metadata Generator"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-007
+    type: specification
+    file: 06-RELATIONSHIP-RESOLVER.md
+    title: "Relationship Resolver"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-008
+    type: specification
+    file: 07-CANONICAL-RESOLVER.md
+    title: "Canonical Resolver"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-009
+    type: specification
+    file: 08-INDEX-BUILDER.md
+    title: "Index Builder"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-010
+    type: specification
+    file: 09-HEALTH-ANALYZER.md
+    title: "Health Analyzer"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-011
+    type: specification
+    file: 10-MIGRATION-PLANNER.md
+    title: "Migration Planner"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-012
+    type: specification
+    file: 11-DESKTOP-PLANNING.md
+    title: "Desktop Planning"
+    status: approved
+    canonical: true
+
+  - id: KA-PLAT-013
+    type: specification
+    file: 12-VERIFICATION.md
+    title: "Verification"
+    status: approved
+    canonical: true
+
+relationships:
+  parent_phase: 2.0D.1
+  implements:
+    - KA-ROAD-001
+    - KA-VIS-001
+  depends_on:
+    - KA-SPEC-001
+    - KA-SPEC-003
+    - KA-SPEC-005
+    - KA-SPEC-010
+    - KA-SPEC-017
+    - KA-STD-002
+    - KA-STD-003
+    - KA-STD-004
+    - KA-STD-006
+    - KA-STD-008
+  enables:
+    - phase: 2.0D.2
+      description: "Documentation Intelligence Platform — built on migrated repository"
+
+health:
+  score: 0
+  last_computed: ""
+  notes: "Phase 2.0D.1 — audit tool not yet run"

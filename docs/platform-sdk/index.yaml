@@ -1,0 +1,213 @@
+---
+# Platform SDK Architecture Index
+# Phase: 2.0D.2.5A — Architecture Freeze
+# Status: FROZEN
+# Frozen: 2026-06-29
+# Owner: Chief Platform Architect
+
+catalog:
+  id: KA-SDK-001
+  version: "1.0.0"
+  phase: "2.0D.2.5A"
+  status: frozen
+  domain: DOM-PLATFORM
+  capability: platform-sdk
+  description: >
+    15-SDK platform-level primitive library. Design-only. No implementation
+    dependency on AI Runtime, ProductFactory, or ContentFactory.
+
+documents:
+
+  - id: KA-SDK-001
+    file: README.md
+    title: "Platform SDK — Catalog and Architecture"
+    type: catalog
+    status: approved
+    description: >
+      Master catalog of all 15 SDKs. Defines mandatory SDK contract,
+      layering diagram, design invariants, and inter-SDK dependency graph.
+
+  - id: KA-SDK-002
+    file: 01-COLLECTIONS-SDK.md
+    title: "Collections SDK"
+    type: specification
+    status: approved
+    depends_on: []
+    description: >
+      Container hierarchy — Sequence, Set, Map, Queue, Bag. Interfaces with
+      complexity guarantees. BiMap with O(1) inverse view.
+
+  - id: KA-SDK-003
+    file: 02-ALGORITHMS-SDK.md
+    title: "Algorithms SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002]
+    description: >
+      Sort, search, transform, reduce, partition, set operations, pipeline.
+      ComplexitySpec frozen dataclass. Lazy Pipeline evaluation.
+
+  - id: KA-SDK-004
+    file: 03-GRAPH-SDK.md
+    title: "Graph SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-003]
+    description: >
+      Generic directed/undirected/DAG/property graph. 11 algorithms including
+      Dijkstra, Bellman-Ford, Kruskal, PageRank. O(1) view creation.
+
+  - id: KA-SDK-005
+    file: 04-SEARCH-SDK.md
+    title: "Search SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-006, KA-SDK-014]
+    description: >
+      Pluggable HybridSearchEngine. Tokenizer and Indexable protocols.
+      ScoreExplanation for per-strategy and per-term breakdown.
+
+  - id: KA-SDK-006
+    file: 05-INDEX-SDK.md
+    title: "Index SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002]
+    description: >
+      BM25 formula, BitmapIndex with bitwise SIMD ops, R-Tree spatial index,
+      BloomPrefilter. Full BM25 TF-IDF formula documented.
+
+  - id: KA-SDK-007
+    file: 06-PARSER-SDK.md
+    title: "Parser SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-003]
+    description: >
+      Grammar, GrammarRule, parser combinators with ordered choice and
+      sequence. TokenStream backtracking. PanicMode error recovery.
+
+  - id: KA-SDK-008
+    file: 07-COMPILER-SDK.md
+    title: "Compiler SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-007, KA-SDK-002]
+    description: >
+      IRNode, SymbolTable with scoped lookup, Pass ordering, OutputSink.
+      CompilerOptions with optimization flags.
+
+  - id: KA-SDK-009
+    file: 08-CACHE-SDK.md
+    title: "Cache SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002]
+    description: >
+      LRU/LFU/TTL/FIFO/ARC eviction. WriteThrough/WriteBack/WriteAround.
+      MultiTierCache, LoadingCache, injectable ClockProvider.
+
+  - id: KA-SDK-010
+    file: 09-OPTIMIZATION-SDK.md
+    title: "Optimization SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-003]
+    description: >
+      OptimizationProblem generic. ConstraintSolver (AC-3), GreedyOptimizer,
+      LocalSearchOptimizer, ParetoOptimizer. CostModel with CostEstimate.
+
+  - id: KA-SDK-011
+    file: 10-SCHEDULING-SDK.md
+    title: "Scheduling SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-010, KA-SDK-016]
+    description: >
+      Task[T] generic. Kahn's incremental TopologicalScheduler.
+      BackpressureAction. WorkStealingScheduler.
+
+  - id: KA-SDK-012
+    file: 11-REASONING-SDK.md
+    title: "Reasoning SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-004, KA-SDK-016]
+    description: >
+      ForwardChainer, BackwardChainer, UnificationEngine, ConstraintPropagator.
+      TruthMaintenanceSystem with recursive dependent retraction.
+
+  - id: KA-SDK-013
+    file: 12-STATISTICS-SDK.md
+    title: "Statistics SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-003]
+    description: >
+      Descriptive, streaming (Welford's), regression, distribution, hypothesis
+      tests (t-test, KS, Mann-Whitney), time series. O(1) per streaming update.
+
+  - id: KA-SDK-014
+    file: 13-SIMILARITY-SDK.md
+    title: "Similarity SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-013]
+    description: >
+      Edit distance, token, vector, fingerprint (SimHash/MinHash/LSH), composite
+      measures. WeightedCompositeMeasure with explain().
+
+  - id: KA-SDK-015
+    file: 14-VALIDATION-SDK.md
+    title: "Validation SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-003]
+    description: >
+      Schema, type, constraint, semantic, pipeline validators. Fluent
+      ConstraintValidator. AndValidator/OrValidator/NotValidator combinators.
+
+  - id: KA-SDK-016
+    file: 15-TRAVERSAL-SDK.md
+    title: "Traversal SDK"
+    type: specification
+    status: approved
+    depends_on: [KA-SDK-002, KA-SDK-004]
+    description: >
+      BFS, DFS pre/post-order, topological (Kahn's), level-order. Lazy
+      Traversal[N] iterator. TraversalVisitor, AggregateVisitor, combinators.
+
+dependency_graph:
+  # SDK → depends_on list
+  KA-SDK-002: []
+  KA-SDK-003: [KA-SDK-002]
+  KA-SDK-004: [KA-SDK-002, KA-SDK-003]
+  KA-SDK-005: [KA-SDK-002, KA-SDK-006, KA-SDK-014]
+  KA-SDK-006: [KA-SDK-002]
+  KA-SDK-007: [KA-SDK-002, KA-SDK-003]
+  KA-SDK-008: [KA-SDK-007, KA-SDK-002]
+  KA-SDK-009: [KA-SDK-002]
+  KA-SDK-010: [KA-SDK-002, KA-SDK-003]
+  KA-SDK-011: [KA-SDK-002, KA-SDK-010, KA-SDK-016]
+  KA-SDK-012: [KA-SDK-002, KA-SDK-004, KA-SDK-016]
+  KA-SDK-013: [KA-SDK-002, KA-SDK-003]
+  KA-SDK-014: [KA-SDK-002, KA-SDK-013]
+  KA-SDK-015: [KA-SDK-002, KA-SDK-003]
+  KA-SDK-016: [KA-SDK-002, KA-SDK-004]
+
+invariants:
+  - "No cycles in dependency graph"
+  - "Collections SDK (KA-SDK-002) has no dependencies — it is the foundation"
+  - "No SDK depends on AI Runtime, ProductFactory, or ContentFactory"
+  - "No SDK contains hardcoded file paths"
+  - "All public interfaces use Python Protocol or ABC — no concrete leakage"
+  - "All operations declare O() complexity"
+
+freeze:
+  phase: "2.0D.2.5A"
+  date: "2026-06-29"
+  gate: "Architecture Freeze"
+  next_phase: "2.0D.2.5B — Platform SDK Implementation"
+  note: >
+    Architecture frozen. No design changes permitted. Implementation begins
+    in Phase 2.0D.2.5B under tools/platform-sdk/.

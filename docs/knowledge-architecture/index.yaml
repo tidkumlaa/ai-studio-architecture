@@ -1,0 +1,126 @@
+capability: knowledge-architecture
+domain: DOM-KNOWLEDGE
+version: "1.0.0"
+status: approved
+owner: Chief Knowledge Architect
+phase: 2.0D.0
+last_updated: 2026-06-29
+
+documents:
+  - id: KA-VIS-001
+    type: vision
+    file: KNOWLEDGE-ARCHITECTURE-VISION.md
+    title: "Knowledge Architecture Vision"
+    status: approved
+    lines: 210
+    canonical: true
+
+  - id: KA-MICRO-001
+    type: architecture
+    file: MICRO-KNOWLEDGE-ARCHITECTURE.md
+    title: "Micro Knowledge Architecture"
+    status: approved
+    lines: 290
+    canonical: true
+
+  - id: KA-STD-001
+    type: standard
+    file: DOCUMENT-FOLDER-STANDARDS.md
+    title: "Document Folder Standards"
+    status: approved
+    lines: 310
+    canonical: true
+
+  - id: KA-STD-002
+    type: standard
+    file: METADATA-STANDARD.md
+    title: "Metadata Standard"
+    status: approved
+    lines: 320
+    canonical: true
+
+  - id: KA-IDX-001
+    type: index
+    file: KNOWLEDGE-INDEX-DESIGN.md
+    title: "Knowledge Index Design"
+    status: approved
+    lines: 330
+    canonical: true
+
+  - id: KA-STD-003
+    type: standard
+    file: CANONICAL-SOURCE-STRATEGY.md
+    title: "Canonical Source Strategy"
+    status: approved
+    lines: 290
+    canonical: true
+
+  - id: KA-STD-004
+    type: standard
+    file: RELATIONSHIP-MODEL.md
+    title: "Relationship Model"
+    status: approved
+    lines: 300
+    canonical: true
+
+  - id: KA-STD-005
+    type: standard
+    file: KNOWLEDGE-NAVIGATION.md
+    title: "Knowledge Navigation"
+    status: approved
+    lines: 280
+    canonical: true
+
+  - id: KA-STD-006
+    type: standard
+    file: KNOWLEDGE-HEALTH-METRICS.md
+    title: "Knowledge Health Metrics"
+    status: approved
+    lines: 300
+    canonical: true
+
+  - id: KA-STD-007
+    type: standard
+    file: KNOWLEDGE-EVOLUTION-STRATEGY.md
+    title: "Knowledge Evolution Strategy"
+    status: approved
+    lines: 290
+    canonical: true
+
+  - id: KA-ROAD-001
+    type: roadmap
+    file: REPOSITORY-REFACTORING-PLAN.md
+    title: "Repository Refactoring Plan"
+    status: approved
+    lines: 290
+    canonical: true
+
+  - id: KA-STD-008
+    type: standard
+    file: REPOSITORY-AUDIT-RULES.md
+    title: "Repository Audit Rules — Structure and Metadata Rules"
+    status: approved
+    lines: 285
+    canonical: true
+
+  - id: KA-STD-008B
+    type: standard
+    file: REPOSITORY-AUDIT-RULES-PART2.md
+    title: "Repository Audit Rules — Size, Reference, Canonical, Health, Ownership"
+    status: approved
+    lines: 373
+    canonical: true
+
+relationships:
+  parent_phase: 2.0D.0
+  next_phase: 2.0D.1
+  enables:
+    - phase: 2.0D.1
+      description: "Repository refactoring — applying this architecture"
+    - phase: 2.0D.2
+      description: "Documentation Intelligence Platform — building on this foundation"
+
+health:
+  score: 0          # Computed by audit tool
+  last_computed: "" # Computed by audit tool
+  notes: "Bootstrapping phase — audit tool not yet implemented"

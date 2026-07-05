@@ -1,0 +1,146 @@
+knowledge_id: KA-KIP-000
+title: Knowledge Intelligence Platform Index
+version: "1.0.0"
+status: approved
+phase: 2.0D.2
+created: 2026-06-29
+review_date: 2026-12-29
+capability: knowledge-intelligence
+domain: DOM-KNOWLEDGE
+
+meta:
+  document_count: 13
+  phase: "2.0D.2 — Knowledge Intelligence Platform"
+  next_available: KA-KIP-014
+
+documents:
+  - id: KA-KIP-001
+    file: README.md
+    title: Knowledge Intelligence Platform Overview
+    type: specification
+    status: approved
+    description: >
+      Platform overview, 12-spec table, implementation directory layout,
+      7 design invariants, data flow diagram.
+
+  - id: KA-KIP-002
+    file: 01-KNOWLEDGE-REGISTRY.md
+    title: Knowledge Registry
+    type: specification
+    status: approved
+    description: >
+      KnowledgeObject frozen dataclass, KnowledgeRegistry interface,
+      KnowledgeResolver, KnowledgeSession, KnowledgeWorkspace,
+      KnowledgeRepository entry point, Bloom Filter pre-check.
+
+  - id: KA-KIP-003
+    file: 02-KNOWLEDGE-GRAPH-RUNTIME.md
+    title: Knowledge Graph Runtime
+    type: specification
+    status: approved
+    description: >
+      Formal property graph G=(V,E,λ_V,λ_E,P_V,P_E), 6 graph variants,
+      KnowledgeGraph interface, BFS/DFS/topological sort/cycle detection/
+      Tarjan's SCC with pseudocode, complexity table.
+
+  - id: KA-KIP-004
+    file: 03-KNOWLEDGE-QUERY-ENGINE.md
+    title: Knowledge Query Engine
+    type: specification
+    status: approved
+    description: >
+      KQL EBNF grammar, full AST hierarchy (9 predicate types),
+      QueryPlan with planner rules, 5 KQL examples, QueryResult,
+      complexity table.
+
+  - id: KA-KIP-005
+    file: 04-KNOWLEDGE-SEARCH.md
+    title: Knowledge Search
+    type: specification
+    status: approved
+    description: >
+      Trie for prefix autocomplete, InvertedIndex with BM25 (k1=1.5, b=0.75),
+      BK-Tree for fuzzy search, Hybrid Search (0.40/0.45/0.15),
+      SearchResult frozen dataclass.
+
+  - id: KA-KIP-006
+    file: 05-KNOWLEDGE-REASONING.md
+    title: Knowledge Reasoning
+    type: specification
+    status: approved
+    description: >
+      InferenceRule dataclass, 8 built-in rules (IR-001 to IR-008),
+      INFER_RELATIONSHIPS pseudocode O(R×E), PROPAGATE_EVIDENCE (0.85 decay),
+      PROPAGATE_CONFIDENCE topological traversal O(V+E), InferredRelationship.
+
+  - id: KA-KIP-007
+    file: 06-IMPACT-ANALYSIS-ENGINE.md
+    title: Impact Analysis Engine
+    type: specification
+    status: approved
+    description: >
+      7 impact categories, ImpactReport/ImpactedObject dataclasses,
+      ANALYZE_IMPACT (reverse BFS), severity classification,
+      ChangeSet analysis, ImpactAnalyzer interface.
+
+  - id: KA-KIP-008
+    file: 07-KNOWLEDGE-HEALTH-RUNTIME.md
+    title: Knowledge Health Runtime
+    type: specification
+    status: approved
+    description: >
+      HealthIndex with SortedList O(log D) + HashMap O(1), 6 dimensions,
+      ON_DOCUMENT_CHANGE incremental update, 7 quality metrics,
+      KnowledgeDebt/DebtItem, HealthRuntime interface.
+
+  - id: KA-KIP-009
+    file: 08-EVIDENCE-ENGINE.md
+    title: Evidence Engine
+    type: specification
+    status: approved
+    description: >
+      6 evidence types, EvidenceRecord dataclass, lifecycle FSM
+      (proposed→collected→validated→verified→expired),
+      EvidenceRegistry, Level 1/2 verification, confidence aggregation.
+
+  - id: KA-KIP-010
+    file: 09-KNOWLEDGE-COMPILER.md
+    title: Knowledge Compiler
+    type: specification
+    status: approved
+    description: >
+      Compiler architecture (Frontend→IR→7 backends), KnowledgeIR/IRObject,
+      7 output targets (Markdown, HTML, Wiki, PromptPack, LLMMemory,
+      JSONL Dataset, Architecture Website), BUILD_PROMPT_PACK algorithm.
+
+  - id: KA-KIP-011
+    file: 10-AI-CONTEXT-COMPILER.md
+    title: AI Context Compiler
+    type: specification
+    status: approved
+    description: >
+      ExecutionContext with ContextObject 3-tier loading, SCORE_RELEVANCE
+      (BM25 0.50 + graph proximity 0.30 + health/status 0.20),
+      PLAN_CONTEXT budget algorithm (50%/30%/20%), AgentMemory, COMPRESS (~20%).
+
+  - id: KA-KIP-012
+    file: 11-DESKTOP-PLANNING.md
+    title: Desktop Planning
+    type: specification
+    status: approved
+    description: >
+      9 dashboard designs: Knowledge Explorer, Graph Viewer, Impact Explorer,
+      Coverage Explorer, Evidence Viewer, Reasoning Viewer, Search Explorer,
+      KQL Console, Health Dashboard. Architecture only.
+
+  - id: KA-KIP-013
+    file: 12-VERIFICATION.md
+    title: Verification
+    type: specification
+    status: approved
+    description: >
+      Architecture (A-001 to A-010), runtime (R-001 to R-010),
+      performance (P-001 to P-010), complexity (C-001 to C-010),
+      CS requirement coverage, graph (G-001 to G-010),
+      reasoning (IR-001 to IR-008), search (S-001 to S-010)
+      acceptance criteria and CLI commands.
